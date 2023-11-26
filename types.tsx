@@ -32,3 +32,12 @@ export type RouteEvent = {
   id: number;
   name: string;
 };
+
+export type RouteEventDetail = {
+  id: number;
+  type: number;
+  description: number;
+  startDate: Date;
+  endDate: Date;
+  daysRemaining: number;
+};
