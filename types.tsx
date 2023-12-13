@@ -35,9 +35,13 @@ export type RouteEvent = {
 
 export type RouteEventDetail = {
   id: number;
-  type: number;
-  description: number;
+  type: string;
+  description: string;
   startDate: Date;
   endDate: Date;
   daysRemaining: number;
+  startPointX: number;
+  startPointY: number;
+  endPointX: number;
+  endPointY: number;
 };
