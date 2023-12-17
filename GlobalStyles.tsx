@@ -5,6 +5,6 @@ export default StyleSheet.create({
     margin: 12
   },
   formField: {
-    marginBottom: 16
+    marginBottom: 4
   }
 });
