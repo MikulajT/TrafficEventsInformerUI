@@ -19,7 +19,8 @@ function App() {
             tabBarLabel: "Trasy",
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="routes" color={color} size={size} />
-            )
+            ),
+            headerShown: false
           }}
         />
         <Tab.Screen 
