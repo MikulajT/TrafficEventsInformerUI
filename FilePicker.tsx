@@ -20,11 +20,11 @@ function FilePicker(props: FilePickerProps) {
       if (result[0].name?.endsWith(".gpx")) {
         setSelectedFile(result[0]);
       } else {
-        ToastAndroid.show("Please select a .gpx file",ToastAndroid.SHORT);
+        ToastAndroid.show("Vyberte prosím soubor s příponou .gpx",ToastAndroid.SHORT);
       }
     } catch (err) {
       if (!DocumentPicker.isCancel(err)) {
-        ToastAndroid.show("Error picking file",ToastAndroid.SHORT);
+        ToastAndroid.show("Nastala chyba během výběru souboru",ToastAndroid.SHORT);
       }
     }
   };
@@ -33,12 +33,12 @@ function FilePicker(props: FilePickerProps) {
     <>
       <Pressable style={[GlobalStyles.formField, styles.iconButton]} onPress={pickDocument}>
         <Icon name="file-upload" size={25}/>
-        <Text>Choose file with route</Text>
+        <Text>Vybrat .gpx soubor s trasou</Text>
       </Pressable> 
       {selectedFile && (
         <>
-          <Text style={[GlobalStyles.formField, {color: (colorScheme == "dark" ? "white" : "black")}]}>Selected File: {selectedFile.name}</Text>
-          <IconButton icon="check" text="Import route" onPress={() => props.uploadDocument(selectedFile)}></IconButton>
+          <Text style={[GlobalStyles.formField, {color: (colorScheme == "dark" ? "white" : "black")}]}>Vybraný soubor: {selectedFile.name}</Text>
+          <IconButton icon="check" text="Importovat trasu" onPress={() => props.uploadDocument(selectedFile)}></IconButton>
         </>
       )}
     </>

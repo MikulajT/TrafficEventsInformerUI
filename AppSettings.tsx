@@ -4,7 +4,7 @@ import GlobalStyles from "./GlobalStyles";
 function AppSettings() {
   return (
     <View style={GlobalStyles.viewContainer}>
-      <Text>Second tab</Text>
+      <Text>TODO</Text>
     </View>
   );
 }

@@ -13,27 +13,27 @@ function App() {
     <NavigationContainer>
       <Tab.Navigator initialRouteName="HomeTabNavigator">
         <Tab.Screen 
-          name="Routes" 
+          name="Trasy" 
           component={HomeTabNavigator} 
           options={{
-            tabBarLabel: "Routes",
+            tabBarLabel: "Trasy",
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="routes" color={color} size={size} />
             )
           }}
         />
         <Tab.Screen 
-          name="Settings" 
+          name="Nastavení" 
           component={AppSettings}
           options={{
-            tabBarLabel: "Settings",
+            tabBarLabel: "Nastavení",
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="cog" color={color} size={size} />
             )
           }} 
         />
         <Tab.Screen 
-          name="App info" 
+          name="Informace o aplikaci" 
           component={AppInfo}
           options={{
             tabBarLabel: "Info",

@@ -22,7 +22,7 @@ function IncidentDetail() {
       // by some browser in the mobile
       await Linking.openURL(url);
     } else {
-      Alert.alert(`Don't know how to open this URL: ${url}`);
+      Alert.alert(`Nastala chyba během otevírání adresy: ${url}`);
     }
   }
 
@@ -45,17 +45,17 @@ function IncidentDetail() {
 
   return (
     <ScrollView style={GlobalStyles.viewContainer}>
-      <Text style={{fontSize: 20, marginBottom: 6}}>Incident type</Text>
+      <Text style={{fontSize: 20, marginBottom: 6}}>Typ</Text>
       <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.type}</Text>
-      <Text style={{fontSize: 20, marginBottom: 6}}>Incident description</Text>
+      <Text style={{fontSize: 20, marginBottom: 6}}>Popis</Text>
       <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.description}</Text>
-      <Text style={{fontSize: 20, marginBottom: 6}}>Start date</Text>
+      <Text style={{fontSize: 20, marginBottom: 6}}>Datum začátku</Text>
       <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.startDate.toLocaleString()}</Text>
-      <Text style={{fontSize: 20, marginBottom: 6}}>End date</Text>
+      <Text style={{fontSize: 20, marginBottom: 6}}>Datum konce</Text>
       <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.endDate.toLocaleString()}</Text>
-      <Text style={{fontSize: 20, marginBottom: 6}}>Remaining days</Text>
+      <Text style={{fontSize: 20, marginBottom: 6}}>Zbývající počet dnů</Text>
       <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.daysRemaining}</Text>
-      <IconButton style={{marginBottom: 16}} icon="map" text="Show on a map" onPress={ShowIncidentOnMap}></IconButton>
+      <IconButton style={{marginBottom: 16}} icon="map" text=" Zobrazit na mapě" onPress={ShowIncidentOnMap}></IconButton>
     </ScrollView>
   );
 }
