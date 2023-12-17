@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, RefreshControl, ScrollView, StyleSheet, View } from "react-native";
 import SimpleTextButton from "./SimpleTextButton";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import GlobalStyles from "./GlobalStyles";
@@ -15,6 +15,7 @@ function renderRoutes(routes: TrafficRoute[], navigation: any) {
 
 function Routes({ navigation } : any) {
   const [routes, setRoutes] = useState<TrafficRoute[]>([]);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
     fetchTrafficRoutes();
@@ -22,6 +23,7 @@ function Routes({ navigation } : any) {
 
   async function fetchTrafficRoutes() {
     try {
+      setRefreshing(true);
       const response = await fetch('http://192.168.88.7:7246/api/trafficRoutes');
       if (response.ok) {
         const data: TrafficRoute[] = await response.json();
@@ -32,11 +34,17 @@ function Routes({ navigation } : any) {
     } catch (error) {
       console.error('Error fetching traffic routes', error);
     }
+      finally {
+        setRefreshing(false);
+      }
   };
 
   return (
       <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
-        <ScrollView>
+        <ScrollView         
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={fetchTrafficRoutes} />
+          }>
           {renderRoutes(routes, navigation)}
         </ScrollView>
         <Pressable style={styles.addRouteButton} onPress={() => navigation.navigate("RouteImporter")}>
