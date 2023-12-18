@@ -5,7 +5,7 @@ import IconButton from "./IconButton";
 import { useEffect, useState } from "react";
 import { RouteEventDetail } from "./types";
 
-function IncidentDetail() {
+function IncidentDetail({ route, navigation } : any) {
   const [routeEventDetail, setRouteEventDetail] = useState<RouteEventDetail>();
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function IncidentDetail() {
 
   async function fetchRouteEventDetail() {
     try {
-      const response = await fetch('http://192.168.88.7:7246/api/trafficRoutes/34/events/1');
+      const response = await fetch(`http://192.168.88.7:7246/api/trafficRoutes/${route.params.routeId}/events/${route.params.eventId}`);
       if (response.ok) {
         const data: RouteEventDetail = await response.json();
         setRouteEventDetail({...data, 

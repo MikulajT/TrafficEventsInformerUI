@@ -8,7 +8,13 @@ import { TrafficRoute } from "./types";
 function renderRoutes(routes: TrafficRoute[], navigation: any) {
   let result = [];
   for (let i = 0; i < routes.length; i++) {
-    result.push(<SimpleTextButton key={routes[i].id} id={routes[i].id} text={routes[i].name} onPress={() => navigation.navigate("Incidents")}></SimpleTextButton>);   
+    result.push(
+    <SimpleTextButton 
+      key={routes[i].id} 
+      id={routes[i].id} 
+      text={routes[i].name} 
+      onPress={() => navigation.navigate("Incidents", { routeId: routes[i].id })}>
+    </SimpleTextButton>);   
   }
   return result;
 }
