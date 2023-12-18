@@ -7,7 +7,7 @@ export type RootStackParamList = {
 };
 
 export type ScrollButtonProps = {
-  id: number;
+  id: number | string;
   text: string;
   onPress(): void;
 };
@@ -29,12 +29,12 @@ export type TrafficRoute = {
 };
 
 export type RouteEvent = {
-  id: number;
+  id: string;
   name: string;
 };
 
 export type RouteEventDetail = {
-  id: number;
+  id: string;
   type: string;
   description: string;
   startDate: Date;
