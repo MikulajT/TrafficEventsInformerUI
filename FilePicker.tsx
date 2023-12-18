@@ -1,4 +1,3 @@
-// FilePicker.tsx
 import React, { useState } from 'react';
 import { Appearance, Pressable, StyleSheet, ToastAndroid } from 'react-native';
 import { Text } from 'react-native';
@@ -20,10 +19,12 @@ function FilePicker(props: FilePickerProps) {
       if (result[0].name?.endsWith(".gpx")) {
         setSelectedFile(result[0]);
       } else {
+        setSelectedFile(null);
         ToastAndroid.show("Vyberte prosím soubor s příponou .gpx",ToastAndroid.SHORT);
       }
     } catch (err) {
       if (!DocumentPicker.isCancel(err)) {
+        setSelectedFile(null);
         ToastAndroid.show("Nastala chyba během výběru souboru",ToastAndroid.SHORT);
       }
     }

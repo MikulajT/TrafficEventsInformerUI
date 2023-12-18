@@ -30,7 +30,7 @@ function RouteImport({ navigation } : any) {
           ToastAndroid.show("Trasa byla úspěšně importována",ToastAndroid.SHORT);
           navigation.navigate("Routes");
         } catch (error) {
-          ToastAndroid.show("Error occured when uploading route",ToastAndroid.SHORT);
+          ToastAndroid.show("Nastala chyba během importování trasy",ToastAndroid.SHORT);
         }
       } else {
         ToastAndroid.show("Vyberte prosím soubor s příponou .gpx",ToastAndroid.SHORT);
