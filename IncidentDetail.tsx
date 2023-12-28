@@ -56,7 +56,7 @@ function IncidentDetail({ route, navigation } : any) {
         <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.endDate.toLocaleString()}</Text>
         <Text style={{fontSize: 20, marginBottom: 6}}>Zbývající počet dnů</Text>
         <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.daysRemaining}</Text>
-        <IconButton style={{marginBottom: 16}} icon="map" text=" Zobrazit na mapě" onPress={ShowIncidentOnMap}></IconButton>
+        <IconButton style={{marginBottom: 16}} icon="map" text="Zobrazit na mapě" onPress={ShowIncidentOnMap}></IconButton>
       </ScrollView>
     </View>
   );

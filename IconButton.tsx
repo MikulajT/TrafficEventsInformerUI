@@ -18,8 +18,7 @@ const styles = StyleSheet.create({
     flexDirection: "row", 
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#007AFF",
-    borderRadius: 100
+    backgroundColor: "#007AFF"
   }
 });
 
