@@ -1,4 +1,4 @@
-import { Alert, Linking, StyleSheet, Text } from "react-native";
+import { Alert, Linking, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import GlobalStyles from "./GlobalStyles";
 import IconButton from "./IconButton";
@@ -44,19 +44,21 @@ function IncidentDetail({ route, navigation } : any) {
   };
 
   return (
-    <ScrollView style={GlobalStyles.viewContainer}>
-      <Text style={{fontSize: 20, marginBottom: 6}}>Typ</Text>
-      <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.type}</Text>
-      <Text style={{fontSize: 20, marginBottom: 6}}>Popis</Text>
-      <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.description}</Text>
-      <Text style={{fontSize: 20, marginBottom: 6}}>Datum začátku</Text>
-      <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.startDate.toLocaleString()}</Text>
-      <Text style={{fontSize: 20, marginBottom: 6}}>Datum konce</Text>
-      <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.endDate.toLocaleString()}</Text>
-      <Text style={{fontSize: 20, marginBottom: 6}}>Zbývající počet dnů</Text>
-      <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.daysRemaining}</Text>
-      <IconButton style={{marginBottom: 16}} icon="map" text=" Zobrazit na mapě" onPress={ShowIncidentOnMap}></IconButton>
-    </ScrollView>
+    <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
+      <ScrollView>
+        <Text style={{fontSize: 20, marginBottom: 6}}>Typ</Text>
+        <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.type}</Text>
+        <Text style={{fontSize: 20, marginBottom: 6}}>Popis</Text>
+        <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.description}</Text>
+        <Text style={{fontSize: 20, marginBottom: 6}}>Datum začátku</Text>
+        <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.startDate.toLocaleString()}</Text>
+        <Text style={{fontSize: 20, marginBottom: 6}}>Datum konce</Text>
+        <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.endDate.toLocaleString()}</Text>
+        <Text style={{fontSize: 20, marginBottom: 6}}>Zbývající počet dnů</Text>
+        <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.daysRemaining}</Text>
+        <IconButton style={{marginBottom: 16}} icon="map" text=" Zobrazit na mapě" onPress={ShowIncidentOnMap}></IconButton>
+      </ScrollView>
+    </View>
   );
 }
 

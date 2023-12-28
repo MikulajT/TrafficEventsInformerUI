@@ -6,5 +6,14 @@ export default StyleSheet.create({
   },
   formField: {
     marginBottom: 4
+  },
+  stickyButton: {
+    position: "absolute",
+    bottom: 15,
+    right: 15,
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 100
   }
 });

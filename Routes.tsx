@@ -47,29 +47,16 @@ function Routes({ navigation } : any) {
 
   return (
       <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
-        <ScrollView         
-          refreshControl={
+        <ScrollView refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={fetchTrafficRoutes} />
-          }>
+        }>
           {renderRoutes(routes, navigation)}
         </ScrollView>
-        <Pressable style={styles.addRouteButton} onPress={() => navigation.navigate("RouteImporter")}>
+        <Pressable style={GlobalStyles.stickyButton} onPress={() => navigation.navigate("RouteImporter")}>
             <Icon name="plus" size={50} color="#32CD32" />
         </Pressable>
       </View>
   );
 }
-
-const styles = StyleSheet.create({
-  addRouteButton: {
-    position: "absolute",
-    bottom: 15,
-    right: 15,
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 100
-  }
-});
 
 export default Routes;
