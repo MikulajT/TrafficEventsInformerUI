@@ -15,20 +15,30 @@ function RouteImport({ navigation } : any) {
     setIsFormValid(true);
   }
 
-  function uploadDocument(selectedFile: any) {
+  async function uploadDocument(selectedFile: any) {
     if (routeName.trim() !== "") {
       if (selectedFile) {
         const formData = new FormData();
-        formData.append('file', {
+        formData.append("RouteName", routeName);
+        formData.append("RouteFile", {
           uri: selectedFile.uri,
           type: selectedFile.type,
           name: selectedFile.name,
         });
-  
-        // TODO: use axios to send the file to the server
         try {
-          ToastAndroid.show("Trasa byla úspěšně importována",ToastAndroid.SHORT);
-          navigation.navigate("Routes");
+          const response = await fetch("http://192.168.88.7:7246/api/trafficRoutes", {
+            method: "POST",
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            body: formData,
+          });
+          if (response.ok) {
+            ToastAndroid.show("Trasa byla úspěšně importována",ToastAndroid.SHORT);
+            navigation.navigate("Routes");
+          } else {
+            ToastAndroid.show("Nastala chyba během importování trasy",ToastAndroid.SHORT);
+          }
         } catch (error) {
           ToastAndroid.show("Nastala chyba během importování trasy",ToastAndroid.SHORT);
         }
