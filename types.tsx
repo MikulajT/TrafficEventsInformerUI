@@ -45,3 +45,9 @@ export type RouteEventDetail = {
   endPointX: number;
   endPointY: number;
 };
+
+export type MenuButtonProps = {
+  id: number | string;
+  text: string;
+  onPress(): void;
+};
