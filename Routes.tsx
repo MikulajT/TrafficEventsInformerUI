@@ -1,4 +1,4 @@
-import { Pressable, RefreshControl, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, RefreshControl, ScrollView, View } from "react-native";
 import SimpleTextButton from "./SimpleTextButton";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import GlobalStyles from "./GlobalStyles";
