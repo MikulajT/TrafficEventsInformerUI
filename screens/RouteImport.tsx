@@ -1,19 +1,12 @@
-import { StyleSheet, Text, ToastAndroid, View } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
-import { Appearance } from 'react-native';
+import { ToastAndroid, View } from "react-native";
 import GlobalStyles from "../assets/GlobalStyles";
 import FilePicker from "../components/FilePicker";
 import { useState } from "react";
+import RouteName from "../components/RouteName";
 
 function RouteImport({ navigation } : any) {
-  const colorScheme = Appearance.getColorScheme();
   const [routeName, setRouteName] = useState<string>("");
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
-
-  function updateRouteName(routeName : string) {
-    setRouteName(routeName);
-    setIsFormValid(true);
-  }
 
   async function uploadDocument(selectedFile: any) {
     if (routeName.trim() !== "") {
@@ -54,35 +47,11 @@ function RouteImport({ navigation } : any) {
   return (
     <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
       <View style={{flex: 1}}>
-        <Text style={[styles.label, {color: (colorScheme == "dark" ? "white" : "black")}]}>Název trasy
-          <Text style={{color: "red"}}> *</Text>
-        </Text>
-        <TextInput value={routeName} onChangeText={updateRouteName} style={[styles.textInput, GlobalStyles.formField, {borderColor: (colorScheme == "dark" ? "white" : "black")}]}></TextInput>
-        <Text style={{color: "red", marginBottom: isFormValid ? 0 : 16}}>{isFormValid ? "" : "Název trasy je povinný"}</Text>
+        <RouteName routeName={routeName} showValidationMessage={!isFormValid} onNameChange={setRouteName}/>
         <FilePicker uploadDocument={uploadDocument}/>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  label: {
-    marginBottom: 4
-  },
-  textInput: {
-    height: 40,
-    borderWidth: 1,
-    padding: 10,
-  },
-  iconButton: {
-    height: 40,
-    borderWidth: 1,
-    flexDirection: "row", 
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#007AFF",
-    borderRadius: 100
-  }
-});
 
 export default RouteImport;

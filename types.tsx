@@ -46,8 +46,19 @@ export type RouteEventDetail = {
   endPointY: number;
 };
 
-export type MenuButtonProps = {
-  id: number | string;
-  text: string;
-  onPress(): void;
+export type RouteMenuButtonProps = {
+  routeId: number;
+  routeName: string;
+  onButtonPress(): void;
 };
+
+export type RouteNameProps = {
+  routeName: string;
+  showValidationMessage?: boolean;
+  onNameChange(text: string): void;
+}
+
+export enum Operation {
+  Update,
+  Delete
+}

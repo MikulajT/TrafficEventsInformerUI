@@ -1,9 +1,9 @@
-import { Pressable, RefreshControl, ScrollView, View } from "react-native";
+import { Pressable, RefreshControl, ScrollView, ToastAndroid, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import GlobalStyles from "../assets/GlobalStyles";
 import { useEffect, useState } from "react";
-import { TrafficRoute } from "../types";
-import MenuButton from "../components/MenuButton";
+import { Operation, TrafficRoute } from "../types";
+import RouteMenuButton from "../components/MenuButton";
 
 function Routes({ navigation } : any) {
   const [routes, setRoutes] = useState<TrafficRoute[]>([]);
@@ -17,14 +17,40 @@ function Routes({ navigation } : any) {
     let result = [];
     for (let i = 0; i < routes.length; i++) {
       result.push(
-      <MenuButton 
+      <RouteMenuButton 
         key={routes[i].id} 
-        id={routes[i].id} 
-        text={routes[i].name} 
-        onPress={() => navigation.navigate("Incidents", { routeId: routes[i].id })}>
-      </MenuButton>);   
+        routeId={routes[i].id} 
+        routeName={routes[i].name} 
+        onButtonPress={() => navigation.navigate("Incidents", { routeId: routes[i].id })}/>
+      );   
     }
     return result;
+  }
+
+  // TODO: Remove
+  // function modifyRoute(routeId: number, operation: Operation) {
+  //   if (operation == Operation.Update) {
+  //     updateRoute(routeId);
+  //   } else if (operation == Operation.Delete) {
+  //     deleteRoute(routeId)
+  //   }
+  // }
+
+  // TODO: Move to RouteRequests class
+  async function deleteRoute(routeId: number) {
+    try {
+      const response = await fetch(`http://192.168.88.7:7246/api/trafficRoutes/${routeId}`, {
+        method: "DELETE"
+      });
+      if (response.ok) {
+        fetchTrafficRoutes();
+        ToastAndroid.show("Trasa byla odstraněna", ToastAndroid.LONG);
+      } else {
+        ToastAndroid.show("Nastala chyba během mazání trasy", ToastAndroid.LONG);
+      }
+    } catch (error) {
+      ToastAndroid.show("Nastala chyba během mazání trasy", ToastAndroid.LONG);
+    }
   }
 
   async function fetchTrafficRoutes() {
