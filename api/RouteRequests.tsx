@@ -25,6 +25,23 @@ class RouteRequests {
     }
     return result;
   }
+
+  async deleteRoute(routeId: number) {
+    let result: boolean;
+    try {
+      const response = await fetch(`${this.apiUrl}/${routeId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        result = true;
+      } else {
+        result = false;
+      }
+    } catch (error) {
+      result = false;
+    }
+    return result;
+  }
 }
 
 export default RouteRequests;

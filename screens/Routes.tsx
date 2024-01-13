@@ -2,8 +2,8 @@ import { Pressable, RefreshControl, ScrollView, ToastAndroid, View } from "react
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import GlobalStyles from "../assets/GlobalStyles";
 import { useEffect, useState } from "react";
-import { Operation, TrafficRoute } from "../types";
-import RouteMenuButton from "../components/MenuButton";
+import { TrafficRoute } from "../types";
+import RouteMenuButton from "../components/RouteMenuButton";
 
 function Routes({ navigation } : any) {
   const [routes, setRoutes] = useState<TrafficRoute[]>([]);
@@ -21,13 +21,14 @@ function Routes({ navigation } : any) {
         key={routes[i].id} 
         routeId={routes[i].id} 
         routeName={routes[i].name} 
-        onButtonPress={() => navigation.navigate("Incidents", { routeId: routes[i].id })}/>
+        onButtonPress={() => navigation.navigate("Incidents", { routeId: routes[i].id })}
+        onRefreshRoutes={fetchTrafficRoutes}/>
       );   
     }
     return result;
   }
 
-  // TODO: Remove
+  // Keep this in case RouteMenuButton will be made into multi-usage component
   // function modifyRoute(routeId: number, operation: Operation) {
   //   if (operation == Operation.Update) {
   //     updateRoute(routeId);
@@ -35,23 +36,6 @@ function Routes({ navigation } : any) {
   //     deleteRoute(routeId)
   //   }
   // }
-
-  // TODO: Move to RouteRequests class
-  async function deleteRoute(routeId: number) {
-    try {
-      const response = await fetch(`http://192.168.88.7:7246/api/trafficRoutes/${routeId}`, {
-        method: "DELETE"
-      });
-      if (response.ok) {
-        fetchTrafficRoutes();
-        ToastAndroid.show("Trasa byla odstraněna", ToastAndroid.LONG);
-      } else {
-        ToastAndroid.show("Nastala chyba během mazání trasy", ToastAndroid.LONG);
-      }
-    } catch (error) {
-      ToastAndroid.show("Nastala chyba během mazání trasy", ToastAndroid.LONG);
-    }
-  }
 
   async function fetchTrafficRoutes() {
     try {

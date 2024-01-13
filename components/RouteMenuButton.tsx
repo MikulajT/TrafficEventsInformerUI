@@ -14,10 +14,23 @@ function RouteMenuButton(props: RouteMenuButtonProps) {
   async function renameRoute(routeId: number, routeName: string) {
     const success = await routeRequests.renameRoute(routeId, routeName);
     if (success) {
+      props.onRefreshRoutes?.();
       ToastAndroid.show("Trasa byla přejmenována", ToastAndroid.LONG);
     }
     else {
       ToastAndroid.show("Nastala chyba během změny názvu trasy", ToastAndroid.LONG);
+    }
+    setIsDialogVisible(false);
+  }
+
+  async function deleteRoute(routeId: number) {
+    const success = await routeRequests.deleteRoute(routeId);
+    if (success) {
+      props.onRefreshRoutes?.();
+      ToastAndroid.show("Trasa byla odstraněna", ToastAndroid.LONG);
+    }
+    else {
+      ToastAndroid.show("Nastala chyba během odstraňování trasy", ToastAndroid.LONG);
     }
     setIsDialogVisible(false);
   }
@@ -36,7 +49,7 @@ function RouteMenuButton(props: RouteMenuButtonProps) {
                     <Icon source="menu" color="white" size={40}></Icon>
                   </Pressable>}>
           <Menu.Item leadingIcon="pencil" onPress={() => setIsDialogVisible(true)} title="Změnit název trasy" />
-          <Menu.Item leadingIcon="delete" /*onPress={() => props.onMenuButtonPress(props.id, Operation.Delete)}*/ title="Odstranit trasu" />
+          <Menu.Item leadingIcon="delete" onPress={() => deleteRoute(props.routeId)} title="Odstranit trasu" />
         </Menu>
       <Portal>
         <Dialog visible={isDialogVisible} onDismiss={() => setIsDialogVisible(false)}>

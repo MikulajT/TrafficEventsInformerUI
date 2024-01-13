@@ -50,6 +50,7 @@ export type RouteMenuButtonProps = {
   routeId: number;
   routeName: string;
   onButtonPress(): void;
+  onRefreshRoutes?(): void
 };
 
 export type RouteNameProps = {
