@@ -4,10 +4,12 @@ import { Button, Dialog, Icon, Menu, Portal } from "react-native-paper";
 import { useState } from "react";
 import RouteName from "./RouteName";
 import RouteRequests from "../api/RouteRequests";
+import ConfirmDialog from "./ConfirmDialog";
 
 function RouteMenuButton(props: RouteMenuButtonProps) {
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
-  const [isDialogVisible, setIsDialogVisible] = useState<boolean>(false);
+  const [isRenameDialogVisible, setIsRenameDialogVisible] = useState<boolean>(false);
+  const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState<boolean>(false);
   const [routeName, setRouteName] = useState<string>("");
   const [showRenameValidationMessage, setShowRenameValidationMessage] = useState<boolean>(false);
   const routeRequests = new RouteRequests("http://192.168.88.7:7246/api/trafficRoutes");
@@ -25,7 +27,7 @@ function RouteMenuButton(props: RouteMenuButtonProps) {
       else {
         ToastAndroid.show("Nastala chyba během změny názvu trasy", ToastAndroid.LONG);
       }
-      closeDialog();
+      closeRenameDialog();
     }
   }
 
@@ -38,18 +40,27 @@ function RouteMenuButton(props: RouteMenuButtonProps) {
     else {
       ToastAndroid.show("Nastala chyba během odstraňování trasy", ToastAndroid.LONG);
     }
-    closeDialog();
+    closeDeleteDialog();
   }
 
-  function closeDialog() {
-    setIsDialogVisible(false);
+  function showRenameDialog() {
+    setIsRenameDialogVisible(true);
+    setIsMenuVisible(false);
+  }
+
+  function closeRenameDialog() {
+    setIsRenameDialogVisible(false);
     setRouteName("");
     setShowRenameValidationMessage(false);
   }
 
-  function showRenameDialog() {
-    setIsDialogVisible(true)
+  function showDeleteDialog() {
+    setIsDeleteDialogVisible(true);
     setIsMenuVisible(false);
+  }
+
+  function closeDeleteDialog() {
+    setIsDeleteDialogVisible(false);
   }
 
   return (
@@ -66,14 +77,20 @@ function RouteMenuButton(props: RouteMenuButtonProps) {
                     <Icon source="menu" color="white" size={40}></Icon>
                   </Pressable>}>
           <Menu.Item leadingIcon="pencil" onPress={showRenameDialog} title="Změnit název trasy" />
-          <Menu.Item leadingIcon="delete" onPress={() => deleteRoute(props.routeId)} title="Odstranit trasu" />
+          <Menu.Item leadingIcon="delete" onPress={showDeleteDialog} title="Odstranit trasu" />
         </Menu>
+      <ConfirmDialog 
+        isVisible={isDeleteDialogVisible}
+        title="Upozornění" 
+        textContent="Opravdu chcete odstranit trasu?" 
+        onCancelPress={closeDeleteDialog} 
+        onConfirmPress={() => deleteRoute(props.routeId)}/>
       <Portal>
-        <Dialog visible={isDialogVisible} onDismiss={() => closeDialog()}>
+        <Dialog visible={isRenameDialogVisible} onDismiss={() => closeRenameDialog()}>
           <Dialog.Content>
           <RouteName routeName={routeName} showValidationMessage={showRenameValidationMessage} onNameChange={setRouteName}/>
           <View style={{flexDirection: "row", justifyContent: "space-around"}}>
-            <Button mode="text" textColor="#EF5350" onPress={() => closeDialog()}>Zrušit</Button>
+            <Button mode="text" textColor="#EF5350" onPress={() => closeRenameDialog()}>Zrušit</Button>
             <Button mode="text" textColor="#66BB6A" onPress={() => renameRoute(props.routeId, routeName)}>Přejmenovat</Button>
           </View>
           </Dialog.Content>

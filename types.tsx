@@ -63,3 +63,11 @@ export enum Operation {
   Update,
   Delete
 }
+
+export type ConfirmDialogProps = {
+  isVisible: boolean;
+  title: string;
+  textContent: string;
+  onCancelPress(): void;
+  onConfirmPress(): void;
+};
