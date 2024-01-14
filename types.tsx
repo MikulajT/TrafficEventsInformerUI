@@ -71,3 +71,8 @@ export type ConfirmDialogProps = {
   onCancelPress(): void;
   onConfirmPress(): void;
 };
+
+export type ApiResponse<T> = {
+  success: boolean;
+  data?: T;
+};

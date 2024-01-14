@@ -4,10 +4,12 @@ import GlobalStyles from "../assets/GlobalStyles";
 import { useEffect, useState } from "react";
 import { TrafficRoute } from "../types";
 import RouteMenuButton from "../components/RouteMenuButton";
+import RouteRequests from "../api/RouteRequests";
 
 function Routes({ navigation } : any) {
   const [routes, setRoutes] = useState<TrafficRoute[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const routeRequests = new RouteRequests("http://192.168.88.7:7246/api/trafficRoutes");
 
   useEffect(() => {
     fetchTrafficRoutes();
@@ -38,21 +40,15 @@ function Routes({ navigation } : any) {
   // }
 
   async function fetchTrafficRoutes() {
-    try {
-      setRefreshing(true);
-      const response = await fetch('http://192.168.88.7:7246/api/trafficRoutes');
-      if (response.ok) {
-        const data: TrafficRoute[] = await response.json();
-        setRoutes(data);
-      } else {
-        console.error('Failed to fetch traffic routes');
-      }
-    } catch (error) {
-      console.error('Error fetching traffic routes', error);
+    setRefreshing(true);
+    const response = await routeRequests.getTrafficRoutes();
+    if (response.success && response.data) {
+      setRoutes(response.data);
     }
-      finally {
-        setRefreshing(false);
-      }
+    else {
+      ToastAndroid.show("Nastala chyba během načítání tras", ToastAndroid.LONG);
+    }
+    setRefreshing(false);
   };
 
   return (

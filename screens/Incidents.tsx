@@ -1,16 +1,18 @@
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, ToastAndroid, View } from "react-native";
 import SimpleTextButton from "../components/SimpleTextButton";
 import GlobalStyles from "../assets/GlobalStyles";
 import { useEffect, useState } from "react";
 import { RouteEvent } from "../types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import RouteEventsRequest from "../api/RouteEventsRequests";
 
 function Incidents({ route, navigation } : any) {
   const [routeEvents, setRouteEvents] = useState<RouteEvent[]>([]);
   const [isRefreshing, setRefreshing] = useState<boolean>(false);
+  const routeEventsRequests = new RouteEventsRequest("http://192.168.88.7:7246/api/trafficRoutes");
 
   useEffect(() => {
-    fetchRouteEvents();
+    fetchRouteEvents(route.params.routeId);
   }, []);
 
   function renderRouteEvents(routeEvents: RouteEvent[], navigation: any) {
@@ -27,38 +29,27 @@ function Incidents({ route, navigation } : any) {
     return result;
   }
 
-  async function fetchRouteEvents() {
-    try {
-      const response = await fetch(`http://192.168.88.7:7246/api/trafficRoutes/${route.params.routeId}/events`);
-      if (response.ok) {
-        const data: RouteEvent[] = await response.json();
-        setRouteEvents(data);
-      } 
-      else {
-        console.error('Failed to fetch traffic route events.');
-      }
-    } catch (error) {
-      console.error('Error fetching traffic route events.', error);
+  async function fetchRouteEvents(routeId: number) {
+    setRefreshing(true);
+    const response = await routeEventsRequests.getRouteEventNames(routeId);
+    if (response.success && response.data) {
+      setRouteEvents(response.data);
     }
+    else {
+      ToastAndroid.show("Nastala chyba během načítání dopravních událostí", ToastAndroid.LONG);
+    }
+    setRefreshing(false);
   };
 
-  async function syncRouteEvents() {
-    try {
-      setRefreshing(true);
-      const response = await fetch(`http://192.168.88.7:7246/api/trafficRoutes/${route.params.routeId}/events/sync`, {
-        method: "POST"
-      });
-      if (response.ok) {
-        const data: RouteEvent[] = await response.json();
-        setRouteEvents(data);
-      } else {
-        console.error('Failed to sync traffic route events.');
-      }
-    } catch (error) {
-      console.error('Failed to sync traffic route events.');
-    } finally {
-      setRefreshing(false);
+  async function syncRouteEvents(routeId: number) {
+    setRefreshing(true);
+    const response = await routeEventsRequests.syncRouteEvents(routeId);
+    if (response.success && response.data) {
+      setRouteEvents(response.data);
+    } else {
+      ToastAndroid.show("Nastala chyba během synchronizace dopravních událostí", ToastAndroid.LONG);
     }
+    setRefreshing(false);
   }
 
   if (isRefreshing) {
@@ -73,7 +64,7 @@ function Incidents({ route, navigation } : any) {
         <ScrollView>
           {renderRouteEvents(routeEvents, navigation)}
         </ScrollView>
-        <Pressable style={GlobalStyles.stickyButton} onPress={syncRouteEvents}>
+        <Pressable style={GlobalStyles.stickyButton} onPress={() => syncRouteEvents(route.params.routeId)}>
           <Icon name="refresh" size={50} color="#007AFF" />
         </Pressable>
       </View>

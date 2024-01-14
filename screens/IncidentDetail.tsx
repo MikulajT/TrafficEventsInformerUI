@@ -1,15 +1,17 @@
-import { Alert, Linking, StyleSheet, Text, View } from "react-native";
+import { Alert, Linking, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import GlobalStyles from "../assets/GlobalStyles";
 import IconButton from "../components/IconButton";
 import { useEffect, useState } from "react";
 import { RouteEventDetail } from "../types";
+import RouteEventsRequest from "../api/RouteEventsRequests";
 
 function IncidentDetail({ route, navigation } : any) {
   const [routeEventDetail, setRouteEventDetail] = useState<RouteEventDetail>();
+  const routeEventsRequests = new RouteEventsRequest("http://192.168.88.7:7246/api/trafficRoutes");
 
   useEffect(() => {
-    fetchRouteEventDetail();
+    fetchRouteEventDetail(route.params.routeId, route.params.eventId);
   }, []);
 
   async function ShowIncidentOnMap() {
@@ -26,20 +28,15 @@ function IncidentDetail({ route, navigation } : any) {
     }
   }
 
-  async function fetchRouteEventDetail() {
-    try {
-      const response = await fetch(`http://192.168.88.7:7246/api/trafficRoutes/${route.params.routeId}/events/${route.params.eventId}`);
-      if (response.ok) {
-        const data: RouteEventDetail = await response.json();
-        setRouteEventDetail({...data, 
-          startDate: new Date(data.startDate), 
-          endDate: new Date(data.endDate) 
-        });
-      } else {
-        console.error('Failed to fetch traffic route events.');
-      }
-    } catch (error) {
-      console.error('Error fetching traffic route events.', error);
+  async function fetchRouteEventDetail(routeId: number, eventId: string) {
+    const response = await routeEventsRequests.getRouteEventDetail(routeId, eventId);
+    if (response.success && response.data) {
+        setRouteEventDetail({...response.data, 
+          startDate: new Date(response.data.startDate), 
+          endDate: new Date(response.data.endDate)});
+    }
+    else {
+      ToastAndroid.show("Nastala chyba během načítání dopravní události", ToastAndroid.LONG);
     }
   };
 

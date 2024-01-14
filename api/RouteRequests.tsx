@@ -1,3 +1,5 @@
+import { ApiResponse, TrafficRoute } from "../types";
+
 class RouteRequests {
   private apiUrl: string;
 
@@ -5,8 +7,45 @@ class RouteRequests {
     this.apiUrl = apiUrl;
   }
 
-  async renameRoute(routeId: number, routeName: string) {
-    let result: boolean;
+  async getTrafficRoutes(): Promise<ApiResponse<TrafficRoute[]>> {
+    let apiResponse: ApiResponse<TrafficRoute[]> = {success: false};
+    try {
+      const response = await fetch(this.apiUrl);
+      if (response.ok) {
+        apiResponse.success = true;
+        apiResponse.data = await response.json();
+      } else {
+      // TODO: Log
+      }
+    } catch (error) {
+      // TODO: Log
+    }
+    return apiResponse;
+  }
+
+  async addRoute(formData: FormData): Promise<ApiResponse<undefined>> {
+    let apiResponse: ApiResponse<undefined> = {success: false};
+    try {
+      const response = await fetch(this.apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+      });
+      if (response.ok) {
+        apiResponse.success = true;
+      } else {
+      // TODO: Log
+      }
+    } catch (error) {
+      // TODO: Log
+    }
+    return apiResponse;
+  }
+
+  async renameRoute(routeId: number, routeName: string): Promise<ApiResponse<undefined>> {
+    let apiResponse: ApiResponse<undefined> = {success: false};
     try {
       const response = await fetch(`${this.apiUrl}/${routeId}`, {
         method: "PUT",
@@ -16,31 +55,31 @@ class RouteRequests {
         body: JSON.stringify({routeName: routeName}),
       });
       if (response.ok) {
-        result = true;
+        apiResponse.success = true;
       } else {
-        result = false;
+      // TODO: Log
       }
     } catch (error) {
-      result = false;
+      // TODO: Log
     }
-    return result;
+    return apiResponse;
   }
 
-  async deleteRoute(routeId: number) {
-    let result: boolean;
+  async deleteRoute(routeId: number): Promise<ApiResponse<undefined>> {
+    let apiResponse: ApiResponse<undefined> = {success: false};
     try {
       const response = await fetch(`${this.apiUrl}/${routeId}`, {
         method: "DELETE",
       });
       if (response.ok) {
-        result = true;
+        apiResponse.success = true;
       } else {
-        result = false;
+        // TODO: Log
       }
     } catch (error) {
-      result = false;
+      // TODO: Log
     }
-    return result;
+    return apiResponse;
   }
 }
 

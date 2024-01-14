@@ -19,8 +19,8 @@ function RouteMenuButton(props: RouteMenuButtonProps) {
       setShowRenameValidationMessage(true);
     } else {
       setShowRenameValidationMessage(false);
-      const success = await routeRequests.renameRoute(routeId, routeName);
-      if (success) {
+      const result = await routeRequests.renameRoute(routeId, routeName);
+      if (result.success) {
         props.onRefreshRoutes?.();
         ToastAndroid.show("Trasa byla přejmenována", ToastAndroid.LONG);
       }
@@ -32,8 +32,8 @@ function RouteMenuButton(props: RouteMenuButtonProps) {
   }
 
   async function deleteRoute(routeId: number) {
-    const success = await routeRequests.deleteRoute(routeId);
-    if (success) {
+    const result = await routeRequests.deleteRoute(routeId);
+    if (result.success) {
       props.onRefreshRoutes?.();
       ToastAndroid.show("Trasa byla odstraněna", ToastAndroid.LONG);
     }
