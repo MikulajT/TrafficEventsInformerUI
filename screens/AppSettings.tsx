@@ -2,9 +2,10 @@ import { ToastAndroid, View } from "react-native";
 import GlobalStyles from "../assets/GlobalStyles";
 import IconButton from "../components/IconButton";
 import RouteEventsRequest from "../api/RouteEventsRequests";
+import Config from "react-native-config";
 
 function AppSettings() {
-  const routeEventsRequests = new RouteEventsRequest("http://192.168.88.7:7246/api/trafficRoutes");
+  const routeEventsRequests = new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`);
 
   async function syncAllRouteEvents() {
     const response = await routeEventsRequests.syncAllRouteEvents();

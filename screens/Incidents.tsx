@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import { RouteEvent } from "../types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import RouteEventsRequest from "../api/RouteEventsRequests";
+import Config from "react-native-config";
 
 function Incidents({ route, navigation } : any) {
   const [routeEvents, setRouteEvents] = useState<RouteEvent[]>([]);
   const [isRefreshing, setRefreshing] = useState<boolean>(false);
-  const routeEventsRequests = new RouteEventsRequest("http://192.168.88.7:7246/api/trafficRoutes");
+  const routeEventsRequests = new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`);
 
   useEffect(() => {
     fetchRouteEvents(route.params.routeId);

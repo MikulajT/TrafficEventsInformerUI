@@ -5,10 +5,11 @@ import IconButton from "../components/IconButton";
 import { useEffect, useState } from "react";
 import { RouteEventDetail } from "../types";
 import RouteEventsRequest from "../api/RouteEventsRequests";
+import Config from 'react-native-config'
 
 function IncidentDetail({ route, navigation } : any) {
   const [routeEventDetail, setRouteEventDetail] = useState<RouteEventDetail>();
-  const routeEventsRequests = new RouteEventsRequest("http://192.168.88.7:7246/api/trafficRoutes");
+  const routeEventsRequests = new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`);
 
   useEffect(() => {
     fetchRouteEventDetail(route.params.routeId, route.params.eventId);

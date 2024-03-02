@@ -5,6 +5,7 @@ import { useState } from "react";
 import RouteName from "./RouteName";
 import RouteRequests from "../api/RouteRequests";
 import ConfirmDialog from "./ConfirmDialog";
+import Config from "react-native-config";
 
 function RouteMenuButton(props: RouteMenuButtonProps) {
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
@@ -12,7 +13,7 @@ function RouteMenuButton(props: RouteMenuButtonProps) {
   const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState<boolean>(false);
   const [routeName, setRouteName] = useState<string>("");
   const [showRenameValidationMessage, setShowRenameValidationMessage] = useState<boolean>(false);
-  const routeRequests = new RouteRequests("http://192.168.88.7:7246/api/trafficRoutes");
+  const routeRequests = new RouteRequests(`${Config.TEI_API_KEY}/trafficRoutes`);
 
   async function renameRoute(routeId: number, routeName: string) {
     if (routeName.length === 0) {

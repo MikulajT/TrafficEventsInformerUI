@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import { TrafficRoute } from "../types";
 import RouteMenuButton from "../components/RouteMenuButton";
 import RouteRequests from "../api/RouteRequests";
+import Config from "react-native-config";
 
 function Routes({ navigation } : any) {
   const [routes, setRoutes] = useState<TrafficRoute[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const routeRequests = new RouteRequests("http://192.168.88.7:7246/api/trafficRoutes");
+  const routeRequests = new RouteRequests(`${Config.TEI_API_KEY}/trafficRoutes`);
 
   useEffect(() => {
     fetchTrafficRoutes();

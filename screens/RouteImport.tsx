@@ -4,11 +4,12 @@ import FilePicker from "../components/FilePicker";
 import { useState } from "react";
 import RouteName from "../components/RouteName";
 import RouteRequests from "../api/RouteRequests";
+import Config from "react-native-config";
 
 function RouteImport({ navigation } : any) {
   const [routeName, setRouteName] = useState<string>("");
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
-  const routeRequests = new RouteRequests("http://192.168.88.7:7246/api/trafficRoutes");
+  const routeRequests = new RouteRequests(`${Config.TEI_API_KEY}/trafficRoutes`);
 
   async function uploadDocument(selectedFile: any) {
     if (routeName.trim() !== "") {
