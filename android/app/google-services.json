@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "995041589777",
+    "project_id": "trafficeventsinformer",
+    "storage_bucket": "trafficeventsinformer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995041589777:android:5be4822fa64f9db7d70fb0",
+        "android_client_info": {
+          "package_name": "com.trafficincidentinformer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwem2UfWSSniw-P_OIR6LuvfKrJkHR6PA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,10 +6,38 @@ import { NavigationContainer } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AppInfo from '../screens/AppInfo';
 import { PaperProvider } from 'react-native-paper';
+import usePushNotification from '../hooks/UsePushNotification';
+import { useEffect } from 'react';
 
 const Tab  = createBottomTabNavigator();
 
 function App() {
+  const {
+    requestUserPermission,
+    getFCMToken,
+    listenToBackgroundNotifications,
+    listenToForegroundNotifications,
+    onNotificationOpenedAppFromBackground,
+    onNotificationOpenedAppFromQuit,
+  } = usePushNotification();
+
+  useEffect(() => {
+    const listenToNotifications = () => {
+      try {
+        getFCMToken();
+        requestUserPermission();
+        onNotificationOpenedAppFromQuit();
+        listenToBackgroundNotifications();
+        listenToForegroundNotifications();
+        onNotificationOpenedAppFromBackground();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    listenToNotifications();
+  }, []);
+
   return (
     <PaperProvider>
       <NavigationContainer>
