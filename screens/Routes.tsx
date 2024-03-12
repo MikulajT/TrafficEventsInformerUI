@@ -6,15 +6,25 @@ import { TrafficRoute } from "../types";
 import RouteMenuButton from "../components/RouteMenuButton";
 import RouteRequests from "../api/RouteRequests";
 import Config from "react-native-config";
+import { useIsFocused } from '@react-navigation/native';
 
-function Routes({ navigation } : any) {
+function Routes({ route, navigation } : any) {
   const [routes, setRoutes] = useState<TrafficRoute[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const routeRequests = new RouteRequests(`${Config.TEI_API_KEY}/trafficRoutes`);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    fetchTrafficRoutes();
+      fetchTrafficRoutes();
   }, []);
+
+  useEffect(() => {
+    // Call fetchTrafficRoutes when new route is imported
+    if (isFocused && route?.params?.refreshRoutes) {
+      route.params.refreshRoutes = false;
+      fetchTrafficRoutes();
+    }
+  }, [isFocused]);
 
   function renderRoutes(routes: TrafficRoute[], navigation: any) {
     let result = [];

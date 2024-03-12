@@ -24,7 +24,7 @@ function RouteImport({ navigation } : any) {
         const response = await routeRequests.addRoute(formData);
         if (response.success) {
           ToastAndroid.show("Trasa byla úspěšně importována",ToastAndroid.LONG);
-          navigation.navigate("Routes");
+          navigation.navigate("Routes", { refreshRoutes: true });
         }
         else {
           ToastAndroid.show("Nastala chyba během importování trasy",ToastAndroid.LONG);
