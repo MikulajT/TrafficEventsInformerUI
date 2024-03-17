@@ -1,7 +1,7 @@
 import messaging from '@react-native-firebase/messaging';
 import {PermissionsAndroid, Platform} from 'react-native';
 
-const usePushNotification = () => {
+function usePushNotification(navigation : any) {
   const requestUserPermission = async () => {
     if (Platform.OS === 'ios') {
       //Request iOS permission
@@ -59,6 +59,9 @@ const usePushNotification = () => {
           'App opened from BACKGROUND by tapping notification:',
           JSON.stringify(remoteMessage),
         );
+        if (remoteMessage.data && remoteMessage.data.eventId) {
+          navigation.navigate("IncidentDetail", { routeId: 0, eventId: remoteMessage.data.eventId });
+        }
       },
     );
     return unsubscribe;
