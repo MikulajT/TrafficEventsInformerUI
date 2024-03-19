@@ -6,8 +6,25 @@ import { NavigationContainer } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AppInfo from '../screens/AppInfo';
 import { PaperProvider } from 'react-native-paper';
+import BackgroundFetch from 'react-native-background-fetch';
 
 function App() {
+  // Configure the background fetch
+  BackgroundFetch.configure({
+    minimumFetchInterval: 1,//28800, // Minimum interval in seconds (8 hours)
+    stopOnTerminate: false, // Continue background fetch even if the app is terminated
+    startOnBoot: true, // Start background fetch on device boot
+  }, async (taskId) => {
+    // Your background fetch task logic here (e.g., make API requests)
+    console.log('Background fetch task executed with taskId:', taskId);
+    BackgroundFetch.finish(taskId);
+  }, async (taskId) => {  
+    // Task timeout callback
+    // This task has exceeded its allowed running-time.
+    // You must stop what you're doing and immediately .finish(taskId)
+    BackgroundFetch.finish(taskId);
+  });
+
   const Tab  = createBottomTabNavigator();
 
   return (

@@ -24,3 +24,12 @@ buildscript {
 	// 	id "com.google.gms.google-services" version "4.4.0" apply false
 	// }
 }
+
+allprojects {
+    repositories {
+       maven {
+           // react-native-background-fetch
+           url("${project(':react-native-background-fetch').projectDir}/libs")
+       }
+    }
+}
