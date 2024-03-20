@@ -7,21 +7,19 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AppInfo from '../screens/AppInfo';
 import { PaperProvider } from 'react-native-paper';
 import BackgroundFetch from 'react-native-background-fetch';
+import RouteEventsRequest from '../api/RouteEventsRequests';
+import Config from 'react-native-config';
 
 function App() {
-  // Configure the background fetch
   BackgroundFetch.configure({
     minimumFetchInterval: 1,//28800, // Minimum interval in seconds (8 hours)
-    stopOnTerminate: false, // Continue background fetch even if the app is terminated
-    startOnBoot: true, // Start background fetch on device boot
+    stopOnTerminate: false,
+    startOnBoot: true,
   }, async (taskId) => {
-    // Your background fetch task logic here (e.g., make API requests)
-    console.log('Background fetch task executed with taskId:', taskId);
+    new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`).syncAllRouteEvents();
+    console.log("Sync all route events.");
     BackgroundFetch.finish(taskId);
   }, async (taskId) => {  
-    // Task timeout callback
-    // This task has exceeded its allowed running-time.
-    // You must stop what you're doing and immediately .finish(taskId)
     BackgroundFetch.finish(taskId);
   });
 
