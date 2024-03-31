@@ -5,16 +5,15 @@ import { IconButtonProps } from "../types";
 function IconButton(props: IconButtonProps) {
   return (
     <Pressable style={[styles.iconButton, props.style]} onPress={props.onPress}>
-      <Icon name={props.icon} size={25}/>
-      <Text style={{fontSize: 16}}>{props.text}</Text>
+      <Icon name={props.icon} size={25} style={{ color: "white" }}/>
+      <Text style={{ fontSize: 20, color: "white", marginLeft: 5 }}>{props.text}</Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   iconButton: {
-    height: 40,
-    borderWidth: 1,
+    height: 35,
     flexDirection: "row", 
     justifyContent: "center",
     alignItems: "center",

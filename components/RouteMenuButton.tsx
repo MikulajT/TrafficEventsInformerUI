@@ -69,13 +69,13 @@ function RouteMenuButton(props: RouteMenuButtonProps) {
       <Pressable style={styles.button} onPress={props.onButtonPress}>
         <Text style={styles.buttonText}>{props.routeName}</Text>
       </Pressable>
-      <View style={styles.verticleLine}></View>
+      {/* <View style={styles.verticleLine}></View> */}
       <Menu
           visible={isMenuVisible}
           onDismiss={() => setIsMenuVisible(false)}
           statusBarHeight={50}
           anchor={<Pressable style={styles.menuButton} onPress={() => setIsMenuVisible(true)}>
-                    <Icon source="menu" color="white" size={40}></Icon>
+                    <Icon source="menu" color="white" size={30}></Icon>
                   </Pressable>}>
           <Menu.Item leadingIcon="pencil" onPress={showRenameDialog} title="Změnit název trasy" />
           <Menu.Item leadingIcon="delete" onPress={showDeleteDialog} title="Odstranit trasu" />
@@ -110,8 +110,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
+    borderRadius: 15,
     backgroundColor: "#007AFF"
   },
   buttonText: {
@@ -125,8 +124,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#F2F3F5"
   },
   menuButton: {
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
+    marginLeft: 10,
+    borderRadius: 15,
     backgroundColor: "#007AFF"
   }
 });
