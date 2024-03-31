@@ -9,10 +9,16 @@ import { PaperProvider } from 'react-native-paper';
 import BackgroundFetch from 'react-native-background-fetch';
 import RouteEventsRequest from '../api/RouteEventsRequests';
 import Config from 'react-native-config';
+import { useColorScheme } from 'react-native';
+import { darkTheme, lightTheme } from '../assets/Themes';
 
 function App() {
+
+  const Tab  = createBottomTabNavigator();
+  let colorScheme = useColorScheme();
+
   BackgroundFetch.configure({
-    minimumFetchInterval: 1,//28800, // Minimum interval in seconds (8 hours)
+    minimumFetchInterval: 28800, // Minimum interval in seconds (8 hours)
     stopOnTerminate: false,
     startOnBoot: true,
   }, async (taskId) => {
@@ -23,10 +29,8 @@ function App() {
     BackgroundFetch.finish(taskId);
   });
 
-  const Tab  = createBottomTabNavigator();
-
   return (
-    <PaperProvider>
+    <PaperProvider theme={colorScheme === "dark" ? darkTheme : lightTheme}>
       <NavigationContainer>
         <Tab.Navigator initialRouteName="HomeTabNavigator">
           <Tab.Screen 
