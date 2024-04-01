@@ -46,11 +46,17 @@ export type RouteEventDetail = {
   endPointY: number;
 };
 
-export type RouteMenuButtonProps = {
-  routeId: number;
-  routeName: string;
-  onButtonPress(): void;
-  onRefreshRoutes?(): void
+export type MenuButtonProps = {
+  id: number | string;
+  text: string;
+  menuItems: MenuBottonItem[];
+  onPress(): void;
+};
+
+export type MenuBottonItem = {
+  icon: string;
+  text: string;
+  onPress(entryId: number | string): void;
 };
 
 export type RouteNameProps = {
@@ -70,6 +76,13 @@ export type ConfirmDialogProps = {
   textContent: string;
   onCancelPress(): void;
   onConfirmPress(): void;
+};
+
+export type RenameDialogProps = {
+  entryId: number | string;
+  isVisible: boolean;
+  onCancel(): void;
+  onRename(entryId: number | string, name: string): void;
 };
 
 export type ApiResponse<T> = {

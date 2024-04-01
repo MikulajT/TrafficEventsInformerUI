@@ -8,11 +8,11 @@ function RouteName(props: RouteNameProps) {
 
   return (
     <>
-    <Text style={[styles.label, { color: (colorScheme == "dark" ? "white" : "black") }]}>Název trasy
-      <Text style={{ color: "red" }}> *</Text>
-    </Text>
-    <TextInput value={props.routeName} onChangeText={props.onNameChange} style={[styles.textInput, GlobalStyles.formField, { borderColor: (colorScheme == "dark" ? "white" : "black") }]}/>
-    <Text style={{ color: "red", marginBottom: props.showValidationMessage ? 16 : 0 }}>{props.showValidationMessage ? "Název trasy je povinný" : ""}</Text>
+      <Text style={[styles.label, { color: (colorScheme == "dark" ? "white" : "black") }]}>Název
+        <Text style={{ color: "red" }}> *</Text>
+      </Text>
+      <TextInput value={props.routeName} onChangeText={props.onNameChange} style={[styles.textInput, GlobalStyles.formField, { borderColor: (colorScheme == "dark" ? "white" : "black") }]}/>
+      <Text style={{ color: "red", marginBottom: props.showValidationMessage ? 16 : 0 }}>{props.showValidationMessage ? "Název je povinný" : ""}</Text>
     </>
   );
 }

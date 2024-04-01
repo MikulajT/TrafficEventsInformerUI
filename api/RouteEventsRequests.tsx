@@ -74,6 +74,27 @@ class RouteEventsRequest {
     }
     return apiResponse;
   }
+
+  async renameRouteEvent(routeId: number, eventId: string, eventName: string): Promise<ApiResponse<undefined>> {
+    let apiResponse: ApiResponse<undefined> = {success: false};
+    try {
+      const response = await fetch(`${this.apiUrl}/${routeId}/events/${eventId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventName),
+      });
+      if (response.ok) {
+        apiResponse.success = true;
+      } else {
+      // TODO: Log
+      }
+    } catch (error) {
+      // TODO: Log
+    }
+    return apiResponse;
+  }
 }
 
 export default RouteEventsRequest;
