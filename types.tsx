@@ -80,6 +80,7 @@ export type ConfirmDialogProps = {
 
 export type RenameDialogProps = {
   entryId: number | string;
+  name: string;
   isVisible: boolean;
   onCancel(): void;
   onRename(entryId: number | string, name: string): void;

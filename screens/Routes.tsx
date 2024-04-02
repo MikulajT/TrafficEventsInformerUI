@@ -16,7 +16,7 @@ function Routes({ route, navigation } : any) {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [isRenameDialogVisible, setIsRenameDialogVisible] = useState<boolean>(false);
   const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState<boolean>(false); 
-  const [selectedRouteId, setSelectedRouteId] = useState<number>(0);
+  const [selectedRoute, setSelectedRoute] = useState<TrafficRoute>({id:0, name:""});
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -71,13 +71,19 @@ function Routes({ route, navigation } : any) {
   };
 
   function showRenameDialog(routeId: number) {
+    const route = routes.find(x => x.id === routeId);
+    if (route != undefined) {
+      setSelectedRoute(route);
+    }
     setIsRenameDialogVisible(true);
-    setSelectedRouteId(routeId);
   }
 
   function showDeleteDialog(routeId: number) {
+    const route = routes.find(x => x.id === routeId);
+    if (route != undefined) {
+      setSelectedRoute(route);
+    }
     setIsDeleteDialogVisible(true);
-    setSelectedRouteId(routeId);
   }
 
   async function renameRoute(routeId: number, routeName: string) {
@@ -128,8 +134,8 @@ function Routes({ route, navigation } : any) {
           title="Upozornění" 
           textContent="Opravdu chcete odstranit trasu?" 
           onCancelPress={closeDeleteDialog} 
-          onConfirmPress={() => deleteRoute(selectedRouteId)}/>
-        <RenameDialog entryId={selectedRouteId} isVisible={isRenameDialogVisible} onCancel={closeRenameDialog} onRename={renameRoute}/>
+          onConfirmPress={() => deleteRoute(selectedRoute.id)}/>
+        <RenameDialog entryId={selectedRoute.id} name={selectedRoute.name} isVisible={isRenameDialogVisible} onCancel={closeRenameDialog} onRename={renameRoute}/>
       </View>
   );
 }

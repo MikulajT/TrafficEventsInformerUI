@@ -2,7 +2,7 @@ import { Appearance, StyleSheet, Text, TextInput } from "react-native";
 import GlobalStyles from "../assets/GlobalStyles";
 import { RouteNameProps } from "../types";
 
-
+// TODO: Rename component
 function RouteName(props: RouteNameProps) {
   const colorScheme = Appearance.getColorScheme();
 

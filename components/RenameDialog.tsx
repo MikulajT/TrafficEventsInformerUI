@@ -1,15 +1,19 @@
 import { Button, Dialog, Portal } from "react-native-paper";
 import RouteName from "./RouteName";
 import { View } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RenameDialogProps } from "../types";
 
 function RenameDialog(props: RenameDialogProps) {
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>(props.name);
   const [showValidationMessage, setShowValidationMessage] = useState<boolean>(false);
 
+  useEffect(() => {
+    setName(props.name);
+  }, [props.name]);
+
   function cancelPress() {
-    setName("");
+    setName(props.name);
     setShowValidationMessage(false);
     props.onCancel();
   }

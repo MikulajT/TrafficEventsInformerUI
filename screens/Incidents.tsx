@@ -12,7 +12,7 @@ function Incidents({ route, navigation } : any) {
   const [routeEvents, setRouteEvents] = useState<RouteEvent[]>([]);
   const [isRefreshing, setRefreshing] = useState<boolean>(false);
   const [isRenameDialogVisible, setIsRenameDialogVisible] = useState<boolean>(false);
-  const [selectedEventId, setSelectedEventId] = useState<string>("");
+  const [selectedEvent, setSelectedEvent] = useState<RouteEvent>({id:"", name:""});
   const routeEventsRequests = new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`);
 
   useEffect(() => {
@@ -60,8 +60,11 @@ function Incidents({ route, navigation } : any) {
   }
 
   function showRenameDialog(eventId: string) {
+    const trafficEvent = routeEvents.find(x => x.id === eventId);
+    if (trafficEvent != undefined) {
+      setSelectedEvent(trafficEvent);
+    }
     setIsRenameDialogVisible(true);
-    setSelectedEventId(eventId);
   }
 
   function closeRenameDialog() {
@@ -96,7 +99,7 @@ function Incidents({ route, navigation } : any) {
         <Pressable style={GlobalStyles.stickyButton} onPress={() => syncRouteEvents(route.params.routeId)}>
           <Icon name="refresh" size={50} color="#007AFF" />
         </Pressable>
-        <RenameDialog entryId={selectedEventId} isVisible={isRenameDialogVisible} onCancel={closeRenameDialog} onRename={renameEvent}/>
+        <RenameDialog entryId={selectedEvent.id} name={selectedEvent.name} isVisible={isRenameDialogVisible} onCancel={closeRenameDialog} onRename={renameEvent}/>
       </View>
     );
   }
