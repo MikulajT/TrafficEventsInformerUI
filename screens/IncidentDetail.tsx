@@ -1,4 +1,4 @@
-import { Alert, Linking, StyleSheet, Text, ToastAndroid, View } from "react-native";
+import { Alert, Linking, StyleSheet, ToastAndroid, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import GlobalStyles from "../assets/GlobalStyles";
 import IconButton from "../components/IconButton";
@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { RouteEventDetail } from "../types";
 import RouteEventsRequest from "../api/RouteEventsRequests";
 import Config from 'react-native-config'
+import { Text } from "react-native-paper";
 
 function IncidentDetail({ route, navigation } : any) {
   const [routeEventDetail, setRouteEventDetail] = useState<RouteEventDetail>();

@@ -1,5 +1,6 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import GlobalStyles from "../assets/GlobalStyles";
+import { Text } from "react-native-paper";
 
 function AppInfo() {
   return (
