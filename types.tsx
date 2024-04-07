@@ -35,6 +35,7 @@ export type RouteEvent = {
 
 export type RouteEventDetail = {
   id: string;
+  name: string;
   type: string;
   description: string;
   startDate: Date;

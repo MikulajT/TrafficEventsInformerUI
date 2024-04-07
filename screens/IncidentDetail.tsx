@@ -44,6 +44,8 @@ function IncidentDetail({ route, navigation } : any) {
   return (
     <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
       <ScrollView>
+        <Text style={{fontSize: 20, marginBottom: 6}}>Název</Text>
+        <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.name}</Text>
         <Text style={{fontSize: 20, marginBottom: 6}}>Typ</Text>
         <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail?.type}</Text>
         <Text style={{fontSize: 20, marginBottom: 6}}>Popis</Text>
