@@ -13,7 +13,7 @@ import RenameDialog from "../components/RenameDialog";
 function Routes({ route, navigation } : any) {
   const routeRequests = new RouteRequests(`${Config.TEI_API_KEY}/trafficRoutes`);
   const [routes, setRoutes] = useState<TrafficRoute[]>([]);
-  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [isRenameDialogVisible, setIsRenameDialogVisible] = useState<boolean>(false);
   const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState<boolean>(false); 
   const [selectedRoute, setSelectedRoute] = useState<TrafficRoute>({id:0, name:""});
@@ -59,7 +59,7 @@ function Routes({ route, navigation } : any) {
   // }
 
   async function fetchTrafficRoutes() {
-    setRefreshing(true);
+    setIsRefreshing(true);
     const response = await routeRequests.getTrafficRoutes();
     if (response.success && response.data) {
       setRoutes(response.data);
@@ -67,7 +67,7 @@ function Routes({ route, navigation } : any) {
     else {
       ToastAndroid.show("Nastala chyba během načítání tras", ToastAndroid.LONG);
     }
-    setRefreshing(false);
+    setIsRefreshing(false);
   };
 
   function showRenameDialog(routeId: number) {
@@ -109,7 +109,6 @@ function Routes({ route, navigation } : any) {
     }
     closeDeleteDialog();
   }
-
   function closeRenameDialog() {
     setIsRenameDialogVisible(false);
   }
@@ -122,7 +121,7 @@ function Routes({ route, navigation } : any) {
   return (
       <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
         <ScrollView refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={fetchTrafficRoutes}/>
+          <RefreshControl refreshing={isRefreshing} onRefresh={fetchTrafficRoutes}/>
         }>
           {renderRoutes(routes, navigation)}
         </ScrollView>

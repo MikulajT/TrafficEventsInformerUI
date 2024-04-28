@@ -1,8 +1,7 @@
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, ToastAndroid, View } from "react-native";
+import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, ToastAndroid, View } from "react-native";
 import GlobalStyles from "../assets/GlobalStyles";
 import { useEffect, useState } from "react";
 import { RouteEvent } from "../types";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import RouteEventsRequest from "../api/RouteEventsRequests";
 import Config from "react-native-config";
 import MenuButton from "../components/MenuButton";
@@ -48,6 +47,7 @@ function Incidents({ route, navigation } : any) {
     setRefreshing(false);
   };
 
+
   async function syncRouteEvents(routeId: number) {
     setRefreshing(true);
     const response = await routeEventsRequests.syncRouteEvents(routeId);
@@ -58,6 +58,7 @@ function Incidents({ route, navigation } : any) {
     }
     setRefreshing(false);
   }
+
 
   function showRenameDialog(eventId: string) {
     const trafficEvent = routeEvents.find(x => x.id === eventId);
@@ -93,12 +94,11 @@ function Incidents({ route, navigation } : any) {
   } else {
     return (
       <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
-        <ScrollView>
+        <ScrollView refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={() => syncRouteEvents(route.params.routeId)}/>
+        }>
           {renderRouteEvents(routeEvents, navigation)}
         </ScrollView>
-        <Pressable style={GlobalStyles.stickyButton} onPress={() => syncRouteEvents(route.params.routeId)}>
-          <Icon name="refresh" size={50} color="#007AFF" />
-        </Pressable>
         <RenameDialog entryId={selectedEvent.id} name={selectedEvent.name} isVisible={isRenameDialogVisible} onCancel={closeRenameDialog} onRename={renameEvent}/>
       </View>
     );

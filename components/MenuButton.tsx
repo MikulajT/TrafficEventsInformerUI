@@ -28,7 +28,6 @@ function MenuButton(props: MenuButtonProps) {
       <Pressable style={styles.button} onPress={props.onPress}>
         <Text style={styles.buttonText}>{props.text}</Text>
       </Pressable>
-      {/* <View style={styles.verticleLine}></View> */}
       <Menu
           visible={isMenuVisible}
           onDismiss={() => setIsMenuVisible(false)}
@@ -47,7 +46,9 @@ const styles = StyleSheet.create({
     flex: 1, 
     flexDirection: "row",
     alignSelf: "center",
-    marginBottom: 10
+    marginBottom: 10,
+    height: "100%",
+    alignItems: "center"
   },
   button: {
     flex: 1,
@@ -59,15 +60,10 @@ const styles = StyleSheet.create({
     color: "white", 
     textAlign: "center"
   },
-  verticleLine: {
-    height: "100%",
-    width: 1,
-    backgroundColor: "#F2F3F5"
-  },
   menuButton: {
     marginLeft: 10,
     borderRadius: 15,
-    backgroundColor: "#007AFF"
+    backgroundColor: "#007AFF",
   }
 });
 

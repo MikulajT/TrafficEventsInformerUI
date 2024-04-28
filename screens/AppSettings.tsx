@@ -8,8 +8,8 @@ function AppSettings() {
   const routeEventsRequests = new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`);
 
   async function syncAllRouteEvents() {
-    const response = await routeEventsRequests.syncAllRouteEvents();
     ToastAndroid.show("Začala synchronizace dopravních událostí", ToastAndroid.LONG);
+    const response = await routeEventsRequests.syncAllRouteEvents();
     if (response.success) {
       ToastAndroid.show("Synchronizace dopravních událostí byla dokončena", ToastAndroid.LONG);
     }
