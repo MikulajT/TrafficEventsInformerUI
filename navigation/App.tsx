@@ -11,11 +11,14 @@ import RouteEventsRequest from '../api/RouteEventsRequests';
 import Config from 'react-native-config';
 import { useColorScheme } from 'react-native';
 import { darkTheme, lightTheme } from '../assets/Themes';
+import { useNetInfo } from '@react-native-community/netinfo';
+import NoNetworkConnection from '../screens/NoNetworkConnection';
 
 function App() {
 
   const Tab  = createBottomTabNavigator();
   let colorScheme = useColorScheme();
+  const { type, isConnected } = useNetInfo();
 
   BackgroundFetch.configure({
     minimumFetchInterval: 28800, // Minimum interval in seconds (8 hours)
@@ -31,41 +34,44 @@ function App() {
 
   return (
     <PaperProvider theme={colorScheme === "dark" ? darkTheme : lightTheme}>
-      <NavigationContainer>
-        <Tab.Navigator initialRouteName="HomeTabNavigator">
-          <Tab.Screen 
-            name="Trasy" 
-            component={HomeTabNavigator} 
-            options={{
-              tabBarLabel: "Trasy",
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="routes" color={color} size={size} />
-              ),
-              headerShown: false
-            }}
-          />
-          <Tab.Screen 
-            name="Nastavení" 
-            component={AppSettings}
-            options={{
-              tabBarLabel: "Nastavení",
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="cog" color={color} size={size} />
-              )
-            }} 
-          />
-          <Tab.Screen 
-            name="Informace o aplikaci" 
-            component={AppInfo}
-            options={{
-              tabBarLabel: "Info",
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="information" color={color} size={size} />
-              )
-            }} 
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
+      { isConnected ? (
+        <NavigationContainer>
+          <Tab.Navigator initialRouteName="HomeTabNavigator">
+            <Tab.Screen 
+              name="Trasy" 
+              component={HomeTabNavigator} 
+              options={{
+                tabBarLabel: "Trasy",
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons name="routes" color={color} size={size} />
+                ),
+                headerShown: false
+              }}
+            />
+            <Tab.Screen 
+              name="Nastavení" 
+              component={AppSettings}
+              options={{
+                tabBarLabel: "Nastavení",
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons name="cog" color={color} size={size} />
+                )
+              }} 
+            />
+            <Tab.Screen 
+              name="Informace o aplikaci" 
+              component={AppInfo}
+              options={{
+                tabBarLabel: "Info",
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons name="information" color={color} size={size} />
+                )
+              }} 
+            />
+          </Tab.Navigator>
+        </NavigationContainer>) : (
+          <NoNetworkConnection/>
+        )}
     </PaperProvider>
   );
 }
