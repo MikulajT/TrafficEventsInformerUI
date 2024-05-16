@@ -7,7 +7,7 @@ function NoNetworkConnection() {
       <Text style={styles.statusText}>
         No network connection
       </Text>
-      <Icon source="emoticon-sad" color="white" size={120}></Icon>
+      <Icon source="emoticon-sad-outline" color="rgba(220, 220, 220, 0.5)" size={120}></Icon>
     </View>
   );
 }
@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#D3D3D3",
   },
   statusText: {
-    fontSize: 18,
+    fontSize: 24,
     textAlign: "center",
     margin: 10,
-    color: "#ffffff",
+    color: "rgba(220, 220, 220, 0.5)"
   }
 });
 
