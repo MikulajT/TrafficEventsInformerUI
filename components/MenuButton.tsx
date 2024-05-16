@@ -33,7 +33,7 @@ function MenuButton(props: MenuButtonProps) {
           onDismiss={() => setIsMenuVisible(false)}
           statusBarHeight={50}
           anchor={<Pressable style={styles.menuButton} onPress={() => setIsMenuVisible(true)}>
-                    <Icon source="menu" color="white" size={30}></Icon>
+                    <Icon source="menu" color="white" size={40}></Icon>
                   </Pressable>}>
           {renderMenuItems(props.id, props.menuItems)}
         </Menu>
@@ -52,8 +52,10 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
+    justifyContent: "center",
+    height: 40,
     borderRadius: 15,
-    backgroundColor: "#007AFF"
+    backgroundColor: "#007AFF",
   },
   buttonText: {
     fontSize: 20,
