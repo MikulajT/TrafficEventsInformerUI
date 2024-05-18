@@ -21,6 +21,7 @@ function Routes({ route, navigation } : any) {
   const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState<boolean>(false); 
   const [isRefreshDialogVisible, setIsRefreshDialogVisible] = useState<boolean>(false);
   const [selectedRoute, setSelectedRoute] = useState<TrafficRoute>({id:0, name:""});
+  const [syncInProgress, setSyncInProgress] = useState<boolean>(false);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -152,13 +153,21 @@ function Routes({ route, navigation } : any) {
   }
 
   async function syncAllRouteEvents() {
-    ToastAndroid.show("Začala synchronizace dopravních událostí", ToastAndroid.LONG);
-    const response = await routeEventsRequests.syncAllRouteEvents();
-    if (response.success) {
-      ToastAndroid.show("Synchronizace dopravních událostí byla dokončena", ToastAndroid.LONG);
+    if (syncInProgress) {
+      ToastAndroid.show("Synchronizace dopravních událostí již probíhá", ToastAndroid.LONG);
     }
     else {
-      ToastAndroid.show("Nastala chyba během synchronizace dopravních událostí", ToastAndroid.LONG);
+      ToastAndroid.show("Začala synchronizace dopravních událostí", ToastAndroid.LONG);
+      setSyncInProgress(true);
+      const response = await routeEventsRequests.syncAllRouteEvents();
+      if (response.success) {
+        setSyncInProgress(false);
+        ToastAndroid.show("Synchronizace dopravních událostí byla dokončena", ToastAndroid.LONG);
+      }
+      else {
+        setSyncInProgress(false);
+        ToastAndroid.show("Nastala chyba během synchronizace dopravních událostí", ToastAndroid.LONG);
+      }
     }
   }
 
