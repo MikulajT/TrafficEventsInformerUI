@@ -75,8 +75,9 @@ export type ConfirmDialogProps = {
   isVisible: boolean;
   title: string;
   textContent: string;
+  showCheckbox: boolean;
   onCancelPress(): void;
-  onConfirmPress(): void;
+  onConfirmPress(checkboxChecked: boolean): void;
 };
 
 export type RenameDialogProps = {

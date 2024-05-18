@@ -94,9 +94,9 @@ function Incidents({ route, navigation } : any) {
   } else {
     return (
       <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
-        <ScrollView refreshControl={
+        <ScrollView /*refreshControl={
           <RefreshControl refreshing={isRefreshing} onRefresh={() => syncRouteEvents(route.params.routeId)}/>
-        }>
+        }*/>
           {renderRouteEvents(routeEvents, navigation)}
         </ScrollView>
         <RenameDialog entryId={selectedEvent.id} name={selectedEvent.name} isVisible={isRenameDialogVisible} onCancel={closeRenameDialog} onRename={renameEvent}/>

@@ -9,13 +9,17 @@ import Config from "react-native-config";
 import { useIsFocused } from '@react-navigation/native';
 import ConfirmDialog from "../components/ConfirmDialog";
 import RenameDialog from "../components/RenameDialog";
+import RouteEventsRequest from "../api/RouteEventsRequests";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Routes({ route, navigation } : any) {
   const routeRequests = new RouteRequests(`${Config.TEI_API_KEY}/trafficRoutes`);
+  const routeEventsRequests = new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`);
   const [routes, setRoutes] = useState<TrafficRoute[]>([]);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [isRenameDialogVisible, setIsRenameDialogVisible] = useState<boolean>(false);
   const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState<boolean>(false); 
+  const [isRefreshDialogVisible, setIsRefreshDialogVisible] = useState<boolean>(false);
   const [selectedRoute, setSelectedRoute] = useState<TrafficRoute>({id:0, name:""});
   const isFocused = useIsFocused();
 
@@ -86,6 +90,17 @@ function Routes({ route, navigation } : any) {
     setIsDeleteDialogVisible(true);
   }
 
+  async function showRefreshDialog() {
+    const showRefreshDialog = await AsyncStorage.getItem("showRefreshDialog");
+
+    if (showRefreshDialog === "true") {
+      setIsRefreshDialogVisible(true);
+    }
+    else {
+      syncAllRouteEvents();
+    }
+  }
+
   async function renameRoute(routeId: number, routeName: string) {
     const result = await routeRequests.renameRoute(routeId, routeName);
     if (result.success) {
@@ -109,6 +124,21 @@ function Routes({ route, navigation } : any) {
     }
     closeDeleteDialog();
   }
+
+  async function handleRoutesSync(checkboxChecked: boolean) {
+    const showRefreshDialog = await AsyncStorage.getItem("showRefreshDialog");
+    if (showRefreshDialog === null || showRefreshDialog === "true") {
+      if (checkboxChecked) {
+        await AsyncStorage.setItem("showRefreshDialog", "false");
+      }
+      else {
+        await AsyncStorage.setItem("showRefreshDialog", "true");
+      }
+    }
+    syncAllRouteEvents();
+    closeRefreshDialog();
+  }
+
   function closeRenameDialog() {
     setIsRenameDialogVisible(false);
   }
@@ -117,6 +147,20 @@ function Routes({ route, navigation } : any) {
     setIsDeleteDialogVisible(false);
   }
 
+  function closeRefreshDialog() {
+    setIsRefreshDialogVisible(false);
+  }
+
+  async function syncAllRouteEvents() {
+    ToastAndroid.show("Začala synchronizace dopravních událostí", ToastAndroid.LONG);
+    const response = await routeEventsRequests.syncAllRouteEvents();
+    if (response.success) {
+      ToastAndroid.show("Synchronizace dopravních událostí byla dokončena", ToastAndroid.LONG);
+    }
+    else {
+      ToastAndroid.show("Nastala chyba během synchronizace dopravních událostí", ToastAndroid.LONG);
+    }
+  }
 
   return (
       <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
@@ -125,15 +169,26 @@ function Routes({ route, navigation } : any) {
         }>
           {renderRoutes(routes, navigation)}
         </ScrollView>
-        <Pressable style={GlobalStyles.stickyButton} onPress={() => navigation.navigate("RouteImporter")}>
+        <Pressable style={[GlobalStyles.stickyButton, {bottom: 60}]} onPress={showRefreshDialog}>
+            <Icon name="refresh" size={50} color="#FFD300" />
+        </Pressable>
+        <Pressable style={[GlobalStyles.stickyButton, {bottom: 5}]} onPress={() => navigation.navigate("RouteImporter")}>
             <Icon name="plus" size={50} color="#32CD32" />
         </Pressable>
         <ConfirmDialog 
           isVisible={isDeleteDialogVisible}
           title="Upozornění" 
           textContent="Opravdu chcete odstranit trasu?" 
+          showCheckbox={false}
           onCancelPress={closeDeleteDialog} 
           onConfirmPress={() => deleteRoute(selectedRoute.id)}/>
+        <ConfirmDialog 
+          isVisible={isRefreshDialogVisible}
+          title="Upozornění" 
+          textContent="Opravdu chcete aktualizovat všechny dopravní události?" 
+          showCheckbox={true}
+          onCancelPress={closeRefreshDialog} 
+          onConfirmPress={(checkboxChecked) => handleRoutesSync(checkboxChecked)}/>
         <RenameDialog entryId={selectedRoute.id} name={selectedRoute.name} isVisible={isRenameDialogVisible} onCancel={closeRenameDialog} onRename={renameRoute}/>
       </View>
   );
