@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import { MenuBottonItem, MenuButtonProps as MenuButtonProps } from "../types";
 import { Icon, Menu } from "react-native-paper";
 import { useState } from "react";
@@ -25,18 +25,22 @@ function MenuButton(props: MenuButtonProps) {
 
   return (
     <View style={styles.menuButtonContainer}>
-      <Pressable style={styles.button} onPress={props.onPress}>
-        <Text style={styles.buttonText}>{props.text}</Text>
-      </Pressable>
       <Menu
+          //style={{flex: 1}}
           visible={isMenuVisible}
           onDismiss={() => setIsMenuVisible(false)}
           statusBarHeight={50}
-          anchor={<Pressable style={styles.menuButton} onPress={() => setIsMenuVisible(true)}>
-                    <Icon source="menu" color="white" size={40}></Icon>
-                  </Pressable>}>
+          anchor={
+            <TouchableHighlight 
+              underlayColor="rgba(0, 122, 255, 0.7)" 
+              style={styles.button} 
+              onPress={props.onPress} 
+              onLongPress={() => setIsMenuVisible(true)}>
+              <Text style={styles.buttonText}>{props.text}</Text>
+            </TouchableHighlight>
+          }>
           {renderMenuItems(props.id, props.menuItems)}
-        </Menu>
+      </Menu>
     </View>
   );
 }
@@ -44,11 +48,7 @@ function MenuButton(props: MenuButtonProps) {
 const styles = StyleSheet.create({
   menuButtonContainer: {
     flex: 1, 
-    flexDirection: "row",
-    alignSelf: "center",
     marginBottom: 10,
-    height: "100%",
-    alignItems: "center"
   },
   button: {
     flex: 1,

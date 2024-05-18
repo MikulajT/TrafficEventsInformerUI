@@ -120,9 +120,9 @@ function Routes({ route, navigation } : any) {
 
   return (
       <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
-        <ScrollView /*refreshControl={
+        <ScrollView refreshControl={
           <RefreshControl refreshing={isRefreshing} onRefresh={fetchTrafficRoutes}/>
-        }*/>
+        }>
           {renderRoutes(routes, navigation)}
         </ScrollView>
         <Pressable style={GlobalStyles.stickyButton} onPress={() => navigation.navigate("RouteImporter")}>
