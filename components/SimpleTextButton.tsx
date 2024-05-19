@@ -1,11 +1,12 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { ScrollButtonProps } from "../types";
+import { Button } from "react-native-paper";
 
 function SimpleTextButton(props: ScrollButtonProps) {
   return (
-    <Pressable style={styles.pressable} onPress={props.onPress}>
+    <Button mode="contained" style={styles.pressable} onPress={props.onPress}>
       <Text style={styles.text}>{props.text}</Text>
-    </Pressable>
+    </Button>
   );
 }
 
@@ -14,8 +15,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginVertical: 10, 
     marginHorizontal: 10, 
-    borderRadius: 15,
-    backgroundColor: "#007AFF"
+    borderRadius: 15
   },
   text: {
     fontSize: 20,

@@ -1,4 +1,4 @@
-import { Pressable, RefreshControl, ScrollView, ToastAndroid, View } from "react-native";
+import { Pressable, RefreshControl, ScrollView, ToastAndroid, TouchableHighlight, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import GlobalStyles from "../assets/GlobalStyles";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import ConfirmDialog from "../components/ConfirmDialog";
 import RenameDialog from "../components/RenameDialog";
 import RouteEventsRequest from "../api/RouteEventsRequests";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Button } from "react-native-paper";
 
 function Routes({ route, navigation } : any) {
   const routeRequests = new RouteRequests(`${Config.TEI_API_KEY}/trafficRoutes`);
@@ -178,12 +179,12 @@ function Routes({ route, navigation } : any) {
         }>
           {renderRoutes(routes, navigation)}
         </ScrollView>
-        <Pressable style={[GlobalStyles.stickyButton, {bottom: 60}]} onPress={showRefreshDialog}>
+        <TouchableHighlight style={[GlobalStyles.stickyButton, {bottom: 60}]} onPress={showRefreshDialog}>
             <Icon name="refresh" size={50} color="#FFD300" />
-        </Pressable>
-        <Pressable style={[GlobalStyles.stickyButton, {bottom: 5}]} onPress={() => navigation.navigate("RouteImporter")}>
+        </TouchableHighlight>
+        <TouchableHighlight style={[GlobalStyles.stickyButton, {bottom: 5}]} onPress={() => navigation.navigate("RouteImporter")}>
             <Icon name="plus" size={50} color="#32CD32" />
-        </Pressable>
+        </TouchableHighlight>
         <ConfirmDialog 
           isVisible={isDeleteDialogVisible}
           title="Upozornění" 

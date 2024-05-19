@@ -1,6 +1,6 @@
-import { Pressable, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { MenuBottonItem, MenuButtonProps as MenuButtonProps } from "../types";
-import { Icon, Menu } from "react-native-paper";
+import { Button, Menu } from "react-native-paper";
 import { useState } from "react";
 
 
@@ -31,13 +31,14 @@ function MenuButton(props: MenuButtonProps) {
           onDismiss={() => setIsMenuVisible(false)}
           statusBarHeight={50}
           anchor={
-            <TouchableHighlight 
-              underlayColor="rgba(0, 122, 255, 0.7)" 
+            <Button 
+              mode="contained"
+              rippleColor="#007AFF"
               style={styles.button} 
               onPress={props.onPress} 
               onLongPress={() => setIsMenuVisible(true)}>
               <Text style={styles.buttonText}>{props.text}</Text>
-            </TouchableHighlight>
+            </Button>
           }>
           {renderMenuItems(props.id, props.menuItems)}
       </Menu>
@@ -48,14 +49,13 @@ function MenuButton(props: MenuButtonProps) {
 const styles = StyleSheet.create({
   menuButtonContainer: {
     flex: 1, 
-    marginBottom: 10,
+    marginBottom: 10
   },
   button: {
     flex: 1,
     justifyContent: "center",
     height: 40,
-    borderRadius: 15,
-    backgroundColor: "#007AFF",
+    borderRadius: 15
   },
   buttonText: {
     fontSize: 20,
@@ -64,8 +64,7 @@ const styles = StyleSheet.create({
   },
   menuButton: {
     marginLeft: 10,
-    borderRadius: 15,
-    backgroundColor: "#007AFF",
+    borderRadius: 15
   }
 });
 

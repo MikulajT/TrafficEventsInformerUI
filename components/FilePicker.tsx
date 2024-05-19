@@ -31,7 +31,7 @@ function FilePicker(props: FilePickerProps) {
 
   return (
     <>
-      <IconButton style={GlobalStyles.formField} icon="file-upload" text="Vybrat .gpx soubor s trasou" onPress={pickDocument}></IconButton>
+      <IconButton style={GlobalStyles.formField} icon="file-upload" text="Vybrat soubor s trasou" onPress={pickDocument}></IconButton>
       {selectedFile && (
         <>
           <Text style={[GlobalStyles.formField, {color: (colorScheme == "dark" ? "white" : "black")}]}>Vybraný soubor: {selectedFile.name}</Text>
