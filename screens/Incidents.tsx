@@ -16,7 +16,7 @@ function Incidents({ route, navigation } : any) {
 
   useEffect(() => {
     fetchRouteEvents(route.params.routeId);
-  }, []);
+  }, [route]);
 
   function renderRouteEvents(routeEvents: RouteEvent[], navigation: any) {
     let result = [];
@@ -47,18 +47,17 @@ function Incidents({ route, navigation } : any) {
     setRefreshing(false);
   };
 
-
   async function syncRouteEvents(routeId: number) {
     setRefreshing(true);
     const response = await routeEventsRequests.syncRouteEvents(routeId);
     if (response.success && response.data) {
+      console.log(response.data);
       setRouteEvents(response.data);
     } else {
       ToastAndroid.show("Nastala chyba během synchronizace dopravních událostí", ToastAndroid.LONG);
     }
     setRefreshing(false);
   }
-
 
   function showRenameDialog(eventId: string) {
     const trafficEvent = routeEvents.find(x => x.id === eventId);
@@ -94,9 +93,9 @@ function Incidents({ route, navigation } : any) {
   } else {
     return (
       <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
-        <ScrollView /*refreshControl={
+        <ScrollView refreshControl={
           <RefreshControl refreshing={isRefreshing} onRefresh={() => syncRouteEvents(route.params.routeId)}/>
-        }*/>
+        }>
           {renderRouteEvents(routeEvents, navigation)}
         </ScrollView>
         <RenameDialog entryId={selectedEvent.id} name={selectedEvent.name} isVisible={isRenameDialogVisible} onCancel={closeRenameDialog} onRename={renameEvent}/>

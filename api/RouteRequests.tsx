@@ -23,8 +23,8 @@ class RouteRequests {
     return apiResponse;
   }
 
-  async addRoute(formData: FormData): Promise<ApiResponse<undefined>> {
-    let apiResponse: ApiResponse<undefined> = {success: false};
+  async addRoute(formData: FormData): Promise<ApiResponse<number>> {
+    let apiResponse: ApiResponse<number> = {success: false};
     try {
       const response = await fetch(this.apiUrl, {
         method: "POST",
@@ -35,6 +35,7 @@ class RouteRequests {
       });
       if (response.ok) {
         apiResponse.success = true;
+        apiResponse.data = await response.json();
       } else {
       // TODO: Log
       }

@@ -5,11 +5,13 @@ import { useState } from "react";
 import RouteName from "../components/RouteName";
 import RouteRequests from "../api/RouteRequests";
 import Config from "react-native-config";
+import RouteEventsRequest from "../api/RouteEventsRequests";
 
 function RouteImport({ navigation } : any) {
   const [routeName, setRouteName] = useState<string>("");
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
   const routeRequests = new RouteRequests(`${Config.TEI_API_KEY}/trafficRoutes`);
+  const routeEventsRequests = new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`);
 
   async function uploadDocument(selectedFile: any) {
     if (routeName.trim() !== "") {
@@ -23,7 +25,10 @@ function RouteImport({ navigation } : any) {
         });
         const response = await routeRequests.addRoute(formData);
         if (response.success) {
-          ToastAndroid.show("Trasa byla úspěšně importována",ToastAndroid.LONG);
+          ToastAndroid.show("Trasa byla úspěšně importována",ToastAndroid.SHORT);
+          if (response.data) {
+            syncRouteEvents(response.data);
+          }
           navigation.navigate("Routes", { refreshRoutes: true });
         }
         else {
@@ -37,6 +42,16 @@ function RouteImport({ navigation } : any) {
       setIsFormValid(false);
     }
   };
+
+  async function syncRouteEvents(routeId: number) {
+    ToastAndroid.show("Začala synchronizace dopravních událostí importované trasy", ToastAndroid.LONG);
+    const response = await routeEventsRequests.syncRouteEvents(routeId);
+    if (response.success) {
+      ToastAndroid.show("Synchronizace dopravních událostí importované trasy byla dokončena", ToastAndroid.LONG);
+    } else {
+      ToastAndroid.show("Nastala chyba během synchronizace dopravních událostí", ToastAndroid.LONG);
+    }
+  }
 
   return (
     <View style={[GlobalStyles.viewContainer, {flex: 1}]}>
