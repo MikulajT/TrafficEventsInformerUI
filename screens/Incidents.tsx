@@ -16,7 +16,7 @@ function Incidents({ route, navigation } : any) {
 
   useEffect(() => {
     fetchRouteEvents(route.params.routeId);
-  }, [route]);
+  }, [navigation]);
 
   function renderRouteEvents(routeEvents: RouteEvent[], navigation: any) {
     let result = [];
