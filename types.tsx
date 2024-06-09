@@ -31,6 +31,10 @@ export type TrafficRoute = {
 export type RouteEvent = {
   id: string;
   name: string;
+  startDate: Date;
+  endDate: Date;
+  totalDays: number;
+  daysRemaining: number;
 };
 
 export type RouteEventDetail = {
@@ -87,6 +91,17 @@ export type RenameDialogProps = {
   onCancel(): void;
   onRename(entryId: number | string, name: string): void;
 };
+
+export type TrafficEventEntryProps = {
+  eventId: string;
+  eventName: string;
+  startDate: Date;
+  endDate: Date;
+  totalDays: number;
+  daysRemaining: number;
+  onPress(): void;
+  onRenamePress(trafficEventId: string): void;
+}
 
 export type ApiResponse<T> = {
   success: boolean;

@@ -4,14 +4,21 @@ import { useEffect, useState } from "react";
 import { RouteEvent } from "../types";
 import RouteEventsRequest from "../api/RouteEventsRequests";
 import Config from "react-native-config";
-import MenuButton from "../components/MenuButton";
 import RenameDialog from "../components/RenameDialog";
+import TrafficEventEntry from "../components/TrafficEventEntry";
 
 function Incidents({ route, navigation } : any) {
   const [routeEvents, setRouteEvents] = useState<RouteEvent[]>([]);
   const [isRefreshing, setRefreshing] = useState<boolean>(false);
   const [isRenameDialogVisible, setIsRenameDialogVisible] = useState<boolean>(false);
-  const [selectedEvent, setSelectedEvent] = useState<RouteEvent>({id:"", name:""});
+  const [selectedEvent, setSelectedEvent] = useState<RouteEvent>({
+    id:"", 
+    name:"", 
+    startDate: new Date(), 
+    endDate: new Date(), 
+    totalDays: 0, 
+    daysRemaining: 0
+  });
   const routeEventsRequests = new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`);
 
   useEffect(() => {
@@ -22,14 +29,16 @@ function Incidents({ route, navigation } : any) {
     let result = [];
     for (let i = 0; i < routeEvents.length; i++) { 
       result.push(
-        <MenuButton 
+        <TrafficEventEntry 
           key={routeEvents[i].id} 
-          id={routeEvents[i].id}
-          text={routeEvents[i].name}
-          menuItems={[
-            {icon: "pencil", text: "Změnit název události", onPress: showRenameDialog}
-          ]}
-          onPress={() => navigation.navigate("IncidentDetail", { routeId: route.params.routeId, eventId: routeEvents[i].id })}/>
+          eventId={routeEvents[i].id}
+          eventName={routeEvents[i].name}
+          startDate={routeEvents[i].startDate}
+          endDate={routeEvents[i].endDate}
+          totalDays={routeEvents[i].totalDays}
+          daysRemaining={routeEvents[i].daysRemaining}
+          onPress={() => navigation.navigate("IncidentDetail", { routeId: route.params.routeId, eventId: routeEvents[i].id })}
+          onRenamePress={showRenameDialog}/>
       );
     }
     return result;
@@ -37,7 +46,7 @@ function Incidents({ route, navigation } : any) {
 
   async function fetchRouteEvents(routeId: number) {
     setRefreshing(true);
-    const response = await routeEventsRequests.getRouteEventNames(routeId);
+    const response = await routeEventsRequests.getRouteEvents(routeId);
     if (response.success && response.data) {
       setRouteEvents(response.data);
     }

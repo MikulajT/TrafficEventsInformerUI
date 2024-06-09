@@ -7,7 +7,7 @@ class RouteEventsRequest {
     this.apiUrl = apiUrl;
   }
 
-  async getRouteEventNames(routeId: number): Promise<ApiResponse<RouteEvent[]>> {
+  async getRouteEvents(routeId: number): Promise<ApiResponse<RouteEvent[]>> {
     let apiResponse: ApiResponse<RouteEvent[]> = {success: false};
     try {
       const response = await fetch(`${this.apiUrl}/${routeId}/events`);
