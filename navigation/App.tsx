@@ -1,22 +1,17 @@
 import * as React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeTabNavigator from './HomeTabNavigator';
-import AppSettings from '../screens/AppSettings';
-import { NavigationContainer } from '@react-navigation/native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AppInfo from '../screens/AppInfo';
 import { PaperProvider } from 'react-native-paper';
 import BackgroundFetch from 'react-native-background-fetch';
 import RouteEventsRequest from '../api/RouteEventsRequests';
-import Config from 'react-native-config';
 import { useColorScheme } from 'react-native';
 import { darkTheme, lightTheme } from '../assets/Themes';
 import { useNetInfo } from '@react-native-community/netinfo';
 import NoNetworkConnection from '../screens/NoNetworkConnection';
+import TabNavigator from './TabNavigator';
+import { persistor, store } from '../redux/Store';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 function App() {
-
-  const Tab  = createBottomTabNavigator();
   let colorScheme = useColorScheme();
   const { type, isConnected } = useNetInfo();
 
@@ -25,54 +20,35 @@ function App() {
     stopOnTerminate: false,
     startOnBoot: true,
   }, async (taskId) => {
-    new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`).syncAllRouteEvents();
+    new RouteEventsRequest().syncAllRouteEvents();
     console.log("Sync all route events.");
     BackgroundFetch.finish(taskId);
   }, async (taskId) => {  
     BackgroundFetch.finish(taskId);
   });
 
+  function renderComponent() {
+    if (isConnected) {
+      // if (IsUserSignedIn()) {
+        return (
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <PaperProvider theme={colorScheme === "dark" ? darkTheme : lightTheme}>
+                <TabNavigator/>
+              </PaperProvider>
+            </PersistGate>
+          </Provider>
+        );
+      //} else {
+      //  return <SignIn/>;
+      //}
+    } else {
+      return <NoNetworkConnection/>;
+    }
+  }
+
   return (
-    <PaperProvider theme={colorScheme === "dark" ? darkTheme : lightTheme}>
-      { isConnected ? (
-        <NavigationContainer>
-          <Tab.Navigator initialRouteName="HomeTabNavigator">
-            <Tab.Screen 
-              name="Trasy" 
-              component={HomeTabNavigator} 
-              options={{
-                tabBarLabel: "Trasy",
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name="routes" color={color} size={size} />
-                ),
-                headerShown: false
-              }}
-            />
-            <Tab.Screen 
-              name="Nastavení" 
-              component={AppSettings}
-              options={{
-                tabBarLabel: "Nastavení",
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name="cog" color={color} size={size} />
-                )
-              }} 
-            />
-            <Tab.Screen 
-              name="Informace o aplikaci" 
-              component={AppInfo}
-              options={{
-                tabBarLabel: "Info",
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name="information" color={color} size={size} />
-                )
-              }} 
-            />
-          </Tab.Navigator>
-        </NavigationContainer>) : (
-          <NoNetworkConnection/>
-        )}
-    </PaperProvider>
+    renderComponent()
   );
 }
 

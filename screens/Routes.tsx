@@ -1,21 +1,19 @@
-import { Pressable, RefreshControl, ScrollView, ToastAndroid, TouchableHighlight, View } from "react-native";
+import { RefreshControl, ScrollView, ToastAndroid, TouchableHighlight, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import GlobalStyles from "../assets/GlobalStyles";
 import { useEffect, useState } from "react";
 import { TrafficRoute } from "../types";
 import MenuButton from "../components/MenuButton";
 import RouteRequests from "../api/RouteRequests";
-import Config from "react-native-config";
 import { useIsFocused } from '@react-navigation/native';
 import ConfirmDialog from "../components/ConfirmDialog";
 import RenameDialog from "../components/RenameDialog";
 import RouteEventsRequest from "../api/RouteEventsRequests";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Button } from "react-native-paper";
 
 function Routes({ route, navigation } : any) {
-  const routeRequests = new RouteRequests(`${Config.TEI_API_KEY}/trafficRoutes`);
-  const routeEventsRequests = new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`);
+  const routeRequests = new RouteRequests();
+  const routeEventsRequests = new RouteEventsRequest();
   const [routes, setRoutes] = useState<TrafficRoute[]>([]);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [isRenameDialogVisible, setIsRenameDialogVisible] = useState<boolean>(false);

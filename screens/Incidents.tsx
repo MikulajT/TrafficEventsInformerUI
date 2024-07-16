@@ -3,7 +3,6 @@ import GlobalStyles from "../assets/GlobalStyles";
 import { useEffect, useState } from "react";
 import { RouteEvent } from "../types";
 import RouteEventsRequest from "../api/RouteEventsRequests";
-import Config from "react-native-config";
 import RenameDialog from "../components/RenameDialog";
 import TrafficEventEntry from "../components/TrafficEventEntry";
 
@@ -19,7 +18,7 @@ function Incidents({ route, navigation } : any) {
     totalDays: 0, 
     daysRemaining: 0
   });
-  const routeEventsRequests = new RouteEventsRequest(`${Config.TEI_API_KEY}/trafficRoutes`);
+  const routeEventsRequests = new RouteEventsRequest();
 
   useEffect(() => {
     fetchRouteEvents(route.params.routeId);
@@ -41,6 +40,7 @@ function Incidents({ route, navigation } : any) {
           onRenamePress={showRenameDialog}/>
       );
     }
+
     return result;
   }
 

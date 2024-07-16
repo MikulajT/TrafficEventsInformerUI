@@ -1,16 +1,21 @@
+import { useSelector } from "react-redux";
 import { ApiResponse, TrafficRoute } from "../types";
+import Config from "react-native-config";
 
 class RouteRequests {
-  private apiUrl: string;
+  private userId: string;
 
-  constructor(apiUrl: string) {
-    this.apiUrl = apiUrl;
+  constructor() {
+    const { userId, profilePictureUrl, firstName, lastName, email } = useSelector((state: any) => state.auth);
+    this.userId = userId;
   }
 
   async getTrafficRoutes(): Promise<ApiResponse<TrafficRoute[]>> {
+    console.log(`signed user id l: ${this.userId}`)
+
     let apiResponse: ApiResponse<TrafficRoute[]> = {success: false};
     try {
-      const response = await fetch(this.apiUrl);
+      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes`);
       if (response.ok) {
         apiResponse.success = true;
         apiResponse.data = await response.json();
@@ -26,7 +31,7 @@ class RouteRequests {
   async addRoute(formData: FormData): Promise<ApiResponse<number>> {
     let apiResponse: ApiResponse<number> = {success: false};
     try {
-      const response = await fetch(this.apiUrl, {
+      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes`, {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
@@ -48,7 +53,7 @@ class RouteRequests {
   async renameRoute(routeId: number, routeName: string): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = {success: false};
     try {
-      const response = await fetch(`${this.apiUrl}/${routeId}`, {
+      const response = await fetch(`${Config.TEI_API_KEY}/trafficRoutes/${routeId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +74,7 @@ class RouteRequests {
   async deleteRoute(routeId: number): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = {success: false};
     try {
-      const response = await fetch(`${this.apiUrl}/${routeId}`, {
+      const response = await fetch(`${Config.TEI_API_KEY}/trafficRoutes/${routeId}`, {
         method: "DELETE",
       });
       if (response.ok) {

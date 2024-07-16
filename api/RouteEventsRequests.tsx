@@ -1,16 +1,19 @@
+import { useSelector } from "react-redux";
 import { ApiResponse, RouteEvent, RouteEventDetail } from "../types";
+import Config from "react-native-config";
 
 class RouteEventsRequest {
-  private apiUrl: string;
+  private userId: string;
 
-  constructor(apiUrl: string) {
-    this.apiUrl = apiUrl;
+  constructor() {
+    const { userId, profilePictureUrl, firstName, lastName, email } = useSelector((state: any) => state.auth);
+    this.userId = userId;
   }
 
   async getRouteEvents(routeId: number): Promise<ApiResponse<RouteEvent[]>> {
     let apiResponse: ApiResponse<RouteEvent[]> = {success: false};
     try {
-      const response = await fetch(`${this.apiUrl}/${routeId}/events`);
+      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events`);
       if (response.ok) {
         apiResponse.success = true;
         apiResponse.data = await response.json();
@@ -27,7 +30,7 @@ class RouteEventsRequest {
   async getRouteEventDetail(routeId: number, eventId: string): Promise<ApiResponse<RouteEventDetail>> {
     let apiResponse: ApiResponse<RouteEventDetail> = {success: false};
     try {
-      const response = await fetch(`${this.apiUrl}/${routeId}/events/${eventId}`);
+      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events/${eventId}`);
       if (response.ok) {
         apiResponse.success = true;
         apiResponse.data = await response.json();
@@ -43,7 +46,7 @@ class RouteEventsRequest {
   async syncAllRouteEvents(): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = {success: false};
     try {
-      const response = await fetch(`${this.apiUrl}/events/sync`, {
+      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/events/sync`, {
         method: "POST"
       });
       if (response.ok) {
@@ -60,7 +63,7 @@ class RouteEventsRequest {
   async syncRouteEvents(routeId: number): Promise<ApiResponse<RouteEvent[]>> {
     let apiResponse: ApiResponse<RouteEvent[]> = {success: false};
     try {
-      const response = await fetch(`${this.apiUrl}/${routeId}/events/sync`, {
+      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events/sync`, {
         method: "POST"
       });
       if (response.ok) {
@@ -78,7 +81,7 @@ class RouteEventsRequest {
   async renameRouteEvent(routeId: number, eventId: string, eventName: string): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = {success: false};
     try {
-      const response = await fetch(`${this.apiUrl}/${routeId}/events/${eventId}`, {
+      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events/${eventId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
