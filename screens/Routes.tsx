@@ -47,7 +47,7 @@ function Routes({ route, navigation } : any) {
           {icon: "pencil", text: "Změnit název trasy", onPress: showRenameDialog},
           {icon: "delete", text: "Odstranit trasu", onPress: showDeleteDialog}
         ]}
-        onPress={() => navigation.navigate("Incidents", { routeId: routes[i].id })}/>
+        onPress={() => navigation.navigate("Incidents", { routeId: routes[i].id, routeName: routes[i].name })}/>
       );   
     }
     return result;

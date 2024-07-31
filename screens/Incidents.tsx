@@ -22,6 +22,7 @@ function Incidents({ route, navigation } : any) {
 
   useEffect(() => {
     fetchRouteEvents(route.params.routeId);
+    navigation.setOptions({ title: `Trasa ${route.params.routeName}` });
   }, [navigation]);
 
   function renderRouteEvents(routeEvents: RouteEvent[], navigation: any) {
