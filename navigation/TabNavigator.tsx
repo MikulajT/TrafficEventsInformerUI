@@ -1,12 +1,13 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import StackNavigator from "./StackNavigator";
+import TrafficRoutesNavigator from "./TrafficRoutesNavigator";
 import AppInfo from "../screens/AppInfo";
-import UserAccount from "../screens/UserAccount";
 import SignIn from "../screens/SignIn";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/Store";
+import UserAccount from "../screens/UserAccount";
+import UserAccountNavigator from "./UserAccountNavigator";
 
 function TabNavigator() {
   const Tab = createBottomTabNavigator();
@@ -19,7 +20,7 @@ function TabNavigator() {
           <Tab.Navigator initialRouteName="HomeTabNavigator">
             <Tab.Screen 
               name="Trasy" 
-              component={StackNavigator} 
+              component={TrafficRoutesNavigator} 
               options={{
                 tabBarLabel: "Trasy",
                 tabBarIcon: ({ color, size }) => (
@@ -40,12 +41,13 @@ function TabNavigator() {
             />
             <Tab.Screen
               name="Uživatelský účet"
-              component={UserAccount}
+              component={UserAccountNavigator}
               options={{
                 tabBarLabel: "Účet",
                 tabBarIcon: ({ color, size }) => (
                   <MaterialCommunityIcons name="account" color={color} size={size} />
-                )
+                ),
+                headerShown: false
               }}
             />
           </Tab.Navigator>

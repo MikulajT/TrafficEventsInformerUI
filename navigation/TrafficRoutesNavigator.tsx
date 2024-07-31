@@ -6,10 +6,10 @@ import IncidentDetail from "../screens/IncidentDetail";
 import { useNavigation } from "@react-navigation/native";
 import usePushNotification from "../hooks/UsePushNotification";
 import { useEffect } from "react";
-import AppSettings from "../screens/AppSettings";
 import SignIn from "../screens/SignIn";
+import AppInfo from "../screens/AppInfo";
 
-function StackNavigator() {
+function TrafficRoutesNavigator() {
   const Stack = createStackNavigator();
   const navigation = useNavigation();
   const {
@@ -40,14 +40,14 @@ function StackNavigator() {
 
   return (
     <Stack.Navigator initialRouteName="Routes">
+      <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="Routes"  component={Routes} options={{title: "Seznam tras"}} />
       <Stack.Screen name="RouteImporter" component={RouteImport} options={{title: "Import trasy"}} />
       <Stack.Screen name="Incidents" component={Incidents} options={{title: "Dopravní události na trase"}} />
       <Stack.Screen name="IncidentDetail" component={IncidentDetail} options={{title: "Detail dopravní události"}} />
-      <Stack.Screen name="Settings" component={AppSettings} options={{title: "Nastavení"}} />
-      <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="AppInfo" component={AppInfo} />
     </Stack.Navigator>
   );
 }
 
-export default StackNavigator;
+export default TrafficRoutesNavigator;
