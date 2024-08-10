@@ -1,7 +1,10 @@
 import messaging from '@react-native-firebase/messaging';
 import {PermissionsAndroid, Platform} from 'react-native';
+import UserRequests from '../api/UserRequests';
 
 function usePushNotification(navigation : any) {
+  const userRequests = new UserRequests();
+
   const requestUserPermission = async () => {
     if (Platform.OS === 'ios') {
       //Request iOS permission
@@ -24,6 +27,7 @@ function usePushNotification(navigation : any) {
   const getFCMToken = async () => {
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
+      userRequests.addFcmDeviceToken(fcmToken)
       console.log('Your Firebase Token is:', fcmToken);
     } else {
       console.log('Failed', 'No token received');
