@@ -63,8 +63,8 @@ function usePushNotification(navigation : any) {
           'App opened from BACKGROUND by tapping notification:',
           JSON.stringify(remoteMessage),
         );
-        if (remoteMessage.data && remoteMessage.data.eventId) {
-          navigation.navigate("IncidentDetail", { routeId: 0, eventId: remoteMessage.data.eventId });
+        if (remoteMessage.data && remoteMessage.data.eventId && remoteMessage.data.routeId) {
+          navigation.navigate("IncidentDetail", { routeId: remoteMessage.data.routeId, eventId: remoteMessage.data.eventId });
         }
       },
     );

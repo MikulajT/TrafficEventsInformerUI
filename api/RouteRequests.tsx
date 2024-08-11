@@ -11,8 +11,6 @@ class RouteRequests {
   }
 
   async getTrafficRoutes(): Promise<ApiResponse<TrafficRoute[]>> {
-    console.log(`signed user id l: ${this.userId}`)
-
     let apiResponse: ApiResponse<TrafficRoute[]> = {success: false};
     try {
       const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes`);
