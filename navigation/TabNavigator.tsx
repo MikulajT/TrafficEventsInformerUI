@@ -6,12 +6,35 @@ import AppInfo from "../screens/AppInfo";
 import SignIn from "../screens/SignIn";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/Store";
-import UserAccount from "../screens/UserAccount";
 import UserAccountNavigator from "./UserAccountNavigator";
+import { useEffect } from "react";
+import RouteEventsRequest from '../api/RouteEventsRequests';
+import RouteRequests from "../api/RouteRequests";
 
 function TabNavigator() {
   const Tab = createBottomTabNavigator();
   const isSignedIn = useSelector((state: RootState) => state.auth.isSignedIn);
+  const routeRequests = new RouteRequests();
+  const routeEventsRequests = new RouteEventsRequest();
+
+  useEffect(() => {
+    async function syncAllRouteEvents() {
+      const userHasRoutes = (await routeRequests.getTrafficRoutes())?.data ?? false;
+
+      if (isSignedIn && userHasRoutes) {
+        console.log("Tab navigator mounted, user signed in and has routes -> sync all route events");
+        const response = await routeEventsRequests.syncAllRouteEvents();
+        if (response.success) {
+          console.log("All routes events synced");
+        }
+        else {
+          console.log("Error occured during sync of all route events");
+        }
+      }
+    }
+
+    syncAllRouteEvents();
+  }, []);
 
   function renderComponent() {
     if (isSignedIn) {
