@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Appearance, ToastAndroid } from 'react-native';
 import { Text } from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
-import { FilePickerProps } from '../types';
+import { FilePickerProps } from '../Types';
 import IconButton from './IconButton';
 import GlobalStyles from '../assets/GlobalStyles';
 

@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { IconButtonProps } from "../types";
+import { IconButtonProps } from "../Types";
 import { Button } from "react-native-paper";
 
 function IconButton(props: IconButtonProps) {

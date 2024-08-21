@@ -2,7 +2,7 @@ import { Button, Dialog, Portal } from "react-native-paper";
 import RouteName from "./RouteName";
 import { View } from "react-native";
 import { useEffect, useState } from "react";
-import { RenameDialogProps } from "../types";
+import { RenameDialogProps } from "../Types";
 
 function RenameDialog(props: RenameDialogProps) {
   const [name, setName] = useState<string>(props.name);

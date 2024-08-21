@@ -3,7 +3,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import GlobalStyles from "../assets/GlobalStyles";
 import IconButton from "../components/IconButton";
 import { useEffect, useState } from "react";
-import { RouteEventDetail } from "../types";
+import { RouteEventDetail } from "../Types";
 import RouteEventsRequest from "../api/RouteEventsRequests";
 import { Text } from "react-native-paper";
 

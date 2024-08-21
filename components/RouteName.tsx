@@ -1,6 +1,6 @@
 import { Appearance, StyleSheet, Text, TextInput } from "react-native";
 import GlobalStyles from "../assets/GlobalStyles";
-import { RouteNameProps } from "../types";
+import { RouteNameProps } from "../Types";
 
 // TODO: Rename component
 function RouteName(props: RouteNameProps) {

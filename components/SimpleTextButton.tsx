@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import { ScrollButtonProps } from "../types";
+import { ScrollButtonProps } from "../Types";
 import { Button } from "react-native-paper";
 
 function SimpleTextButton(props: ScrollButtonProps) {

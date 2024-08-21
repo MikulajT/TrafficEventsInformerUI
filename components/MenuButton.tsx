@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { MenuBottonItem, MenuButtonProps as MenuButtonProps } from "../types";
+import { MenuBottonItem, MenuButtonProps as MenuButtonProps } from "../Types";
 import { Button, Menu } from "react-native-paper";
 import { useState } from "react";
 

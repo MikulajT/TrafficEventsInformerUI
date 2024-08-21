@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { ApiResponse, RouteEvent, RouteEventDetail } from "../types";
+import { ApiResponse, RouteEvent, RouteEventDetail } from "../Types";
 import Config from "react-native-config";
 
 class RouteEventsRequest {

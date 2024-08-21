@@ -1,5 +1,5 @@
 import { Button, Checkbox, Dialog, Portal, Text } from "react-native-paper";
-import { ConfirmDialogProps } from "../types";
+import { ConfirmDialogProps } from "../Types";
 import { useState } from "react";
 import { View } from "react-native";
 

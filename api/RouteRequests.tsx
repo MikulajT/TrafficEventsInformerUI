@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { ApiResponse, TrafficRoute } from "../types";
+import { ApiResponse, TrafficRoute } from "../Types";
 import Config from "react-native-config";
 
 class RouteRequests {

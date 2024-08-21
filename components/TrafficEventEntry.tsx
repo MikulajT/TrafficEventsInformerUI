@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TrafficEventEntryProps } from "../types";
+import { TrafficEventEntryProps } from "../Types";
 import { Menu, Text } from "react-native-paper";
 import { Appearance, StyleSheet, TouchableNativeFeedback, View } from "react-native";
 import { darkTheme, lightTheme } from "../assets/Themes";

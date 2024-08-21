@@ -2,7 +2,7 @@ import { RefreshControl, ScrollView, ToastAndroid, TouchableHighlight, View } fr
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import GlobalStyles from "../assets/GlobalStyles";
 import { useEffect, useState } from "react";
-import { TrafficRoute } from "../types";
+import { TrafficRoute } from "../Types";
 import MenuButton from "../components/MenuButton";
 import RouteRequests from "../api/RouteRequests";
 import { useIsFocused } from '@react-navigation/native';

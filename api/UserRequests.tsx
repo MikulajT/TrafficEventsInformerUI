@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { ApiResponse } from "../types";
+import { ApiResponse } from "../Types";
 import Config from "react-native-config";
 
 class UserRequests {
