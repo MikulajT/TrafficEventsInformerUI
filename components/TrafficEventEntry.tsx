@@ -11,7 +11,13 @@ function TrafficEventEntry(props: TrafficEventEntryProps) {
   const colorScheme = Appearance.getColorScheme();
 
   function getProgressBarWidth(totalDays: number, daysRemaining: number) {
-    return Math.ceil((100 - (daysRemaining / totalDays) * 100));
+    const progressBarWidth = Math.ceil((100 - (daysRemaining / totalDays) * 100));
+
+    if (progressBarWidth < 0) {
+      return 0; // Traffic event in future
+    } else {
+      return progressBarWidth;
+    }
   }
 
   return (
