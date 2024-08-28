@@ -31,9 +31,9 @@ function UserAccount({ navigation } : any) {
           <Text style={styles.userEmail}>{email}</Text>
         </View>
       </View>
-      <Button icon='cog' mode='contained' style={{marginBottom: 10}} onPress={() => {navigation.navigate('Settings')}}>
+      {/* <Button icon='cog' mode='contained' style={{marginBottom: 10}} onPress={() => {navigation.navigate('Settings')}}>
         Nastavení
-      </Button>
+      </Button> */}
       <Button icon='logout' mode='contained' onPress={() => {setIsSignOutDialogVisible(true)}}>
         Odhlásit se
       </Button>

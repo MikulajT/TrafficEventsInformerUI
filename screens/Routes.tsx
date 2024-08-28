@@ -177,9 +177,9 @@ function Routes({ route, navigation } : any) {
         }>
           {renderRoutes(routes, navigation)}
         </ScrollView>
-        <TouchableHighlight style={[GlobalStyles.stickyButton, {bottom: 60}]} onPress={showRefreshDialog}>
+        {/* <TouchableHighlight style={[GlobalStyles.stickyButton, {bottom: 60}]} onPress={showRefreshDialog}>
             <Icon name="refresh" size={50} color="#FFD300" />
-        </TouchableHighlight>
+        </TouchableHighlight> */}
         <TouchableHighlight style={[GlobalStyles.stickyButton, {bottom: 5}]} onPress={() => navigation.navigate("RouteImporter")}>
             <Icon name="plus" size={50} color="#32CD32" />
         </TouchableHighlight>

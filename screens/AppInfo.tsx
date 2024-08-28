@@ -4,8 +4,9 @@ import { Text } from "react-native-paper";
 
 function AppInfo() {
   return (
-    <View style={GlobalStyles.viewContainer}>
-      <Text>TODO</Text>
+    <View style={[GlobalStyles.viewContainer, {display: "flex", flexDirection: "row"}]}>
+      <Text style={{fontSize: 16}}>Verze aplikace: </Text>
+      <Text style={{fontSize: 16}}>0.0.1</Text>
     </View>
   );
 }
