@@ -6,10 +6,10 @@ import { useColorScheme } from 'react-native';
 import { darkTheme, lightTheme } from '../assets/Themes';
 import { useNetInfo } from '@react-native-community/netinfo';
 import NoNetworkConnection from '../screens/NoNetworkConnection';
-import TabNavigator from './TabNavigator';
 import { persistor, store } from '../redux/Store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import MasterNavigator from './MasterNavigator';
 
 function App() {
   let colorScheme = useColorScheme();
@@ -20,7 +20,7 @@ function App() {
     stopOnTerminate: false,
     startOnBoot: true,
   }, async (taskId) => {
-    new RouteEventsRequest().syncAllRouteEvents();
+    new RouteEventsRequest().syncAllUsersRouteEvents();
     console.log("Sync all route events.");
     BackgroundFetch.finish(taskId);
   }, async (taskId) => {  
@@ -34,7 +34,7 @@ function App() {
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
               <PaperProvider theme={colorScheme === "dark" ? darkTheme : lightTheme}>
-                <TabNavigator/>
+                <MasterNavigator/>
               </PaperProvider>
             </PersistGate>
           </Provider>

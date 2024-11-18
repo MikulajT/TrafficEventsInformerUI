@@ -44,7 +44,7 @@ function RouteImport({ navigation } : any) {
 
   async function syncRouteEvents(routeId: number) {
     ToastAndroid.show("Začala synchronizace dopravních událostí importované trasy", ToastAndroid.LONG);
-    const response = await routeEventsRequests.syncRouteEvents(routeId);
+    const response = await routeEventsRequests.syncUsersRouteEvents(routeId);
     if (response.success) {
       ToastAndroid.show("Synchronizace dopravních událostí importované trasy byla dokončena", ToastAndroid.LONG);
     } else {

@@ -6,12 +6,14 @@ class RouteRequests {
   private userId: string;
 
   constructor() {
-    const { userId, profilePictureUrl, firstName, lastName, email } = useSelector((state: any) => state.auth);
-    this.userId = userId;
+    const { userId, profilePictureUrl, firstName, lastName, email, provider } = useSelector((state: any) => state.auth);
+    
+    this.userId = `${provider[0].toLowerCase()}_${userId}`;
   }
 
-  async getTrafficRoutes(): Promise<ApiResponse<TrafficRoute[]>> {
+  async getUsersRoutes(): Promise<ApiResponse<TrafficRoute[]>> {
     let apiResponse: ApiResponse<TrafficRoute[]> = {success: false};
+
     try {
       const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes`);
       if (response.ok) {
@@ -23,13 +25,16 @@ class RouteRequests {
     } catch (error) {
       // TODO: Log
     }
+
     return apiResponse;
   }
 
   async addRoute(formData: FormData): Promise<ApiResponse<number>> {
     let apiResponse: ApiResponse<number> = {success: false};
+    formData.append("UserId", this.userId);
+
     try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes`, {
+      const response = await fetch(`${Config.TEI_API_KEY}/trafficRoutes`, {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
@@ -45,6 +50,7 @@ class RouteRequests {
     } catch (error) {
       // TODO: Log
     }
+    
     return apiResponse;
   }
 

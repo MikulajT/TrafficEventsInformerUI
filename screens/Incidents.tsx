@@ -59,7 +59,7 @@ function Incidents({ route, navigation } : any) {
 
   async function syncRouteEvents(routeId: number) {
     setRefreshing(true);
-    const response = await routeEventsRequests.syncRouteEvents(routeId);
+    const response = await routeEventsRequests.syncUsersRouteEvents(routeId);
     if (response.success && response.data) {
       console.log(response.data);
       setRouteEvents(response.data);

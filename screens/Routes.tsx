@@ -64,7 +64,7 @@ function Routes({ route, navigation } : any) {
 
   async function fetchTrafficRoutes() {
     setIsRefreshing(true);
-    const response = await routeRequests.getTrafficRoutes();
+    const response = await routeRequests.getUsersRoutes();
     if (response.success && response.data) {
       setRoutes(response.data);
     }
@@ -158,7 +158,7 @@ function Routes({ route, navigation } : any) {
     else {
       ToastAndroid.show("Začala synchronizace dopravních událostí", ToastAndroid.LONG);
       setSyncInProgress(true);
-      const response = await routeEventsRequests.syncAllRouteEvents();
+      const response = await routeEventsRequests.syncAllUsersRouteEvents();
       if (response.success) {
         setSyncInProgress(false);
         ToastAndroid.show("Synchronizace dopravních událostí byla dokončena", ToastAndroid.LONG);

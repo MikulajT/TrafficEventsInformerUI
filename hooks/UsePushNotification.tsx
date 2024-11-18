@@ -25,12 +25,23 @@ function usePushNotification(navigation : any) {
   }
 
   const getFCMToken = async () => {
-    const fcmToken = await messaging().getToken();
-    if (fcmToken) {
-      userRequests.addFcmDeviceToken(fcmToken)
-      console.log('Your Firebase Token is:', fcmToken);
-    } else {
-      console.log('Failed', 'No token received');
+    try {
+      const fcmToken = await messaging().getToken();
+  
+      if (fcmToken) {
+        const addUserResult = await userRequests.addUser();
+  
+        if (addUserResult.success) {
+          await userRequests.addFcmDeviceToken(fcmToken);
+          console.log('Your Firebase Token is:', fcmToken);
+        } else {
+          console.log('Failed to add user');
+        }
+      } else {
+        console.log('Failed', 'No token received');
+      }
+    } catch (error) {
+      console.error('Error fetching FCM token:', error);
     }
   };
 
