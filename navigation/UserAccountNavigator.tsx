@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import UserAccount from "../screens/UserAccount";
 import AppSettings from "../screens/AppSettings";

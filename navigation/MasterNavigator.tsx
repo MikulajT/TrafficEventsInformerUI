@@ -7,21 +7,13 @@ import TabNavigator from "./TabNavigator";
 function MasterNavigator() {
   const isSignedIn = useSelector((state: RootState) => state.auth.isSignedIn);
 
-  function renderComponent() {
-    if (isSignedIn) {
-      return (
-        <TabNavigator/>
-      );
-    } else {
-      return (
-        <NavigationContainer>
-          <SignIn/>
-        </NavigationContainer>  
-      );
-    }
-  }
-
-  return renderComponent();
+  return isSignedIn ? (
+    <TabNavigator />
+  ) : (
+    <NavigationContainer>
+      <SignIn />
+    </NavigationContainer>
+  );
 }
 
 export default MasterNavigator;

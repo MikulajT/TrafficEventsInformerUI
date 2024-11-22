@@ -53,15 +53,6 @@ function Routes({ route, navigation } : any) {
     return result;
   }
 
-  // Keep this in case RouteMenuButton will be made into multi-usage component
-  // function modifyRoute(routeId: number, operation: Operation) {
-  //   if (operation == Operation.Update) {
-  //     updateRoute(routeId);
-  //   } else if (operation == Operation.Delete) {
-  //     deleteRoute(routeId)
-  //   }
-  // }
-
   async function fetchTrafficRoutes() {
     setIsRefreshing(true);
     const response = await routeRequests.getUsersRoutes();

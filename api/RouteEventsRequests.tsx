@@ -6,7 +6,7 @@ class RouteEventsRequest {
   private userId: string;
 
   constructor() {
-    const { userId, profilePictureUrl, firstName, lastName, email, provider } = useSelector((state: any) => state.auth);
+    const { userId, provider } = useSelector((state: any) => state.auth);
     
     this.userId = `${provider[0].toLowerCase()}_${userId}`;
   }

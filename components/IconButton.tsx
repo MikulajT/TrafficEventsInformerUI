@@ -12,7 +12,4 @@ function IconButton(props: IconButtonProps) {
   );
 }
 
-const styles = StyleSheet.create({
-});
-
 export default IconButton;

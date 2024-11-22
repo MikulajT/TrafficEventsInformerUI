@@ -7,7 +7,7 @@ class UserRequests {
   private email: string;
 
   constructor() {
-    const { userId, profilePictureUrl, firstName, lastName, email, provider } = useSelector((state: any) => state.auth);
+    const { userId, email, provider } = useSelector((state: any) => state.auth);
     this.userId = `${provider[0].toLowerCase()}_${userId}`;
     this.email = email;
   }

@@ -29,19 +29,15 @@ function App() {
 
   function renderComponent() {
     if (isConnected) {
-      // if (IsUserSignedIn()) {
-        return (
-          <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-              <PaperProvider theme={colorScheme === "dark" ? darkTheme : lightTheme}>
-                <MasterNavigator/>
-              </PaperProvider>
-            </PersistGate>
-          </Provider>
-        );
-      //} else {
-      //  return <SignIn/>;
-      //}
+      return (
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <PaperProvider theme={colorScheme === "dark" ? darkTheme : lightTheme}>
+              <MasterNavigator/>
+            </PaperProvider>
+          </PersistGate>
+        </Provider>
+      );
     } else {
       return <NoNetworkConnection/>;
     }

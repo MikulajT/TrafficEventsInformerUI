@@ -9,7 +9,6 @@ export default StyleSheet.create({
   },
   stickyButton: {
     position: "absolute",
-    //bottom: 15,
     right: 15,
     backgroundColor: "white",
     borderWidth: 1,

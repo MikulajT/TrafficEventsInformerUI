@@ -26,7 +26,6 @@ function MenuButton(props: MenuButtonProps) {
   return (
     <View style={styles.menuButtonContainer}>
       <Menu
-          //style={{flex: 1}}
           visible={isMenuVisible}
           onDismiss={() => setIsMenuVisible(false)}
           statusBarHeight={50}

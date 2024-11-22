@@ -1,7 +1,6 @@
 import { Button, Checkbox, Dialog, Portal, Text } from "react-native-paper";
 import { ConfirmDialogProps } from "../Types";
 import { useState } from "react";
-import { View } from "react-native";
 
 function ConfirmDialog(props: ConfirmDialogProps) {
   const [checked, setChecked] = useState<boolean>(false);
