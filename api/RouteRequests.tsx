@@ -20,10 +20,18 @@ class RouteRequests {
         apiResponse.success = true;
         apiResponse.data = await response.json();
       } else {
-      // TODO: Log
+        console.error("The request wasn't successful.", {
+          status: response.status,
+          statusText: response.statusText,
+          url: response.url,
+        });
+        
       }
     } catch (error) {
-      // TODO: Log
+      console.error("An error occurred while fetching route events.", {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
     }
 
     return apiResponse;
@@ -45,10 +53,18 @@ class RouteRequests {
         apiResponse.success = true;
         apiResponse.data = await response.json();
       } else {
-      // TODO: Log
+        console.error("The request wasn't successful.", {
+          status: response.status,
+          statusText: response.statusText,
+          url: response.url,
+        });
+        
       }
     } catch (error) {
-      // TODO: Log
+      console.error("An error occurred while fetching route events.", {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
     }
     
     return apiResponse;
@@ -67,10 +83,17 @@ class RouteRequests {
       if (response.ok) {
         apiResponse.success = true;
       } else {
-      // TODO: Log
+        console.error("The request wasn't successful.", {
+          status: response.status,
+          statusText: response.statusText,
+          url: response.url,
+        });
       }
     } catch (error) {
-      // TODO: Log
+      console.error("An error occurred while fetching route events.", {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
     }
     return apiResponse;
   }
@@ -84,10 +107,17 @@ class RouteRequests {
       if (response.ok) {
         apiResponse.success = true;
       } else {
-        // TODO: Log
+        console.error("The request wasn't successful.", {
+          status: response.status,
+          statusText: response.statusText,
+          url: response.url,
+        });
       }
     } catch (error) {
-      // TODO: Log
+      console.error("An error occurred while fetching route events.", {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
     }
     return apiResponse;
   }
