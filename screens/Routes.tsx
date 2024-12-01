@@ -149,7 +149,7 @@ function Routes({ route, navigation } : any) {
     else {
       ToastAndroid.show("Začala synchronizace dopravních událostí", ToastAndroid.LONG);
       setSyncInProgress(true);
-      const response = await routeEventsRequests.syncAllUsersRouteEvents();
+      const response = await routeEventsRequests.syncAllRouteEvents();
       if (response.success) {
         setSyncInProgress(false);
         ToastAndroid.show("Synchronizace dopravních událostí byla dokončena", ToastAndroid.LONG);
@@ -168,9 +168,9 @@ function Routes({ route, navigation } : any) {
         }>
           {renderRoutes(routes, navigation)}
         </ScrollView>
-        {/* <TouchableHighlight style={[GlobalStyles.stickyButton, {bottom: 60}]} onPress={showRefreshDialog}>
+        <TouchableHighlight style={[GlobalStyles.stickyButton, {bottom: 60}]} onPress={showRefreshDialog}>
             <Icon name="refresh" size={50} color="#FFD300" />
-        </TouchableHighlight> */}
+        </TouchableHighlight>
         <TouchableHighlight style={[GlobalStyles.stickyButton, {bottom: 5}]} onPress={() => navigation.navigate("RouteImporter")}>
             <Icon name="plus" size={50} color="#32CD32" />
         </TouchableHighlight>

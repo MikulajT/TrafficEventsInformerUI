@@ -26,7 +26,7 @@ function RouteImport({ navigation } : any) {
         if (response.success) {
           ToastAndroid.show("Trasa byla úspěšně importována",ToastAndroid.SHORT);
           if (response.data) {
-            syncRouteEvents(response.data);
+            syncRouteEvents();
           }
           navigation.navigate("Routes", { refreshRoutes: true });
         }
@@ -42,9 +42,9 @@ function RouteImport({ navigation } : any) {
     }
   };
 
-  async function syncRouteEvents(routeId: number) {
+  async function syncRouteEvents() {
     ToastAndroid.show("Začala synchronizace dopravních událostí importované trasy", ToastAndroid.LONG);
-    const response = await routeEventsRequests.syncUsersRouteEvents(routeId);
+    const response = await routeEventsRequests.syncAllRouteEvents();
     if (response.success) {
       ToastAndroid.show("Synchronizace dopravních událostí importované trasy byla dokončena", ToastAndroid.LONG);
     } else {

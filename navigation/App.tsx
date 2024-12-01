@@ -20,7 +20,7 @@ function App() {
     stopOnTerminate: false,
     startOnBoot: true,
   }, async (taskId) => {
-    new RouteEventsRequest().syncAllUsersRouteEvents();
+    new RouteEventsRequest().syncAllRouteEvents();
     console.log("Sync all route events.");
     BackgroundFetch.finish(taskId);
   }, async (taskId) => {  

@@ -57,7 +57,7 @@ class RouteEventsRequest {
     return apiResponse;
   }
 
-  async syncAllUsersRouteEvents(): Promise<ApiResponse<undefined>> {
+  async syncAllRouteEvents(): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = {success: false};
     try {
       const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/events/sync`, {
@@ -65,31 +65,6 @@ class RouteEventsRequest {
       });
       if (response.ok) {
         apiResponse.success = true;
-      } else {
-        console.error("The request wasn't successful.", {
-          status: response.status,
-          statusText: response.statusText,
-          url: response.url,
-        });
-      }
-    } catch (error) {
-      console.error("An error occurred while fetching route events.", {
-        error: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined,
-      });
-    }
-    return apiResponse;
-  }
-
-  async syncUsersRouteEvents(routeId: number): Promise<ApiResponse<RouteEvent[]>> {
-    let apiResponse: ApiResponse<RouteEvent[]> = {success: false};
-    try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events/sync`, {
-        method: "POST"
-      });
-      if (response.ok) {
-        apiResponse.success = true;
-        apiResponse.data = await response.json();
       } else {
         console.error("The request wasn't successful.", {
           status: response.status,

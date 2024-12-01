@@ -19,7 +19,7 @@ function TabNavigator() {
 
       if (userHasRoutes) {
         console.log("Tab navigator mounted, user signed in and has routes -> sync all route events");
-        const response = await routeEventsRequests.syncAllUsersRouteEvents();
+        const response = await routeEventsRequests.syncAllRouteEvents();
         if (response.success) {
           console.log("All routes events synced");
         }
