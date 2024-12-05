@@ -8,7 +8,7 @@ class RouteEventsRequest {
   constructor() {
     const { userId, provider } = useSelector((state: any) => state.auth);
     
-    this.userId = `${provider[0].toLowerCase()}_${userId}`;
+    this.userId = provider != null && provider.length > 0 ? `${provider[0].toLowerCase()}_${userId}`: "";
   }
 
   async getRouteEvents(routeId: number): Promise<ApiResponse<RouteEvent[]>> {

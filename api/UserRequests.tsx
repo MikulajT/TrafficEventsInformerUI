@@ -8,7 +8,7 @@ class UserRequests {
 
   constructor() {
     const { userId, email, provider } = useSelector((state: any) => state.auth);
-    this.userId = `${provider[0].toLowerCase()}_${userId}`;
+    this.userId = provider != null && provider.length > 0 ? `${provider[0].toLowerCase()}_${userId}`: "";
     this.email = email;
   }
 

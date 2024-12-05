@@ -5,22 +5,31 @@ import { Button, Text } from "react-native-paper";
 import ConfirmDialog from "../components/ConfirmDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../redux/Store";
+import { LoginManager } from "react-native-fbsdk-next";
+import auth from '@react-native-firebase/auth';
 
 function UserAccount({ navigation } : any) {
   const [isSignOutDialogVisible, setIsSignOutDialogVisible] = useState<boolean>(false); 
-  const { profilePictureUrl, firstName, lastName, email } = useSelector((state: any) => state.auth);
+  const { profilePictureUrl, firstName, lastName, email, provider } = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
 
   async function signUserOut() {
     try {
-      setIsSignOutDialogVisible(false);
-      GoogleSignin.configure({});
-      await GoogleSignin.signOut();
+      if (provider === "google") {
+        setIsSignOutDialogVisible(false);
+        GoogleSignin.configure({});
+        await GoogleSignin.signOut();
+      } else {
+        LoginManager.logOut();
+        await auth().signOut();
+      }
+  
       dispatch(signOut());
     } catch (error) {
       console.log(error);
     }
   }
+  
 
   return (
     <View>
