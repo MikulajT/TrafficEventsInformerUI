@@ -10,6 +10,7 @@ import ConfirmDialog from "../components/ConfirmDialog";
 import RenameDialog from "../components/RenameDialog";
 import RouteEventsRequest from "../api/RouteEventsRequests";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ActivityIndicatorOverlay from "../components/ActivityIndicatorOverlay";
 
 function Routes({ route, navigation } : any) {
   const routeRequests = new RouteRequests();
@@ -42,7 +43,8 @@ function Routes({ route, navigation } : any) {
       <MenuButton 
         key={routes[i].id} 
         id={routes[i].id} 
-        text={routes[i].name} 
+        text={routes[i].name}
+        disabled={syncInProgress}
         menuItems={[
           {icon: "pencil", text: "Změnit název trasy", onPress: showRenameDialog},
           {icon: "delete", text: "Odstranit trasu", onPress: showDeleteDialog}
@@ -147,7 +149,6 @@ function Routes({ route, navigation } : any) {
       ToastAndroid.show("Synchronizace dopravních událostí již probíhá", ToastAndroid.LONG);
     }
     else {
-      ToastAndroid.show("Začala synchronizace dopravních událostí", ToastAndroid.LONG);
       setSyncInProgress(true);
       const response = await routeEventsRequests.syncAllRouteEvents();
       if (response.success) {
@@ -171,7 +172,7 @@ function Routes({ route, navigation } : any) {
         <TouchableHighlight style={[GlobalStyles.stickyButton, {bottom: 60}]} onPress={showRefreshDialog}>
             <Icon name="refresh" size={50} color="#FFD300" />
         </TouchableHighlight>
-        <TouchableHighlight style={[GlobalStyles.stickyButton, {bottom: 5}]} onPress={() => navigation.navigate("RouteImporter")}>
+        <TouchableHighlight style={[GlobalStyles.stickyButton, {bottom: 5}]} onPress={() => navigation.navigate("RouteImporter", {syncAllRouteEvents: syncAllRouteEvents})}>
             <Icon name="plus" size={50} color="#32CD32" />
         </TouchableHighlight>
         <ConfirmDialog 
@@ -189,6 +190,7 @@ function Routes({ route, navigation } : any) {
           onCancelPress={closeRefreshDialog} 
           onConfirmPress={(checkboxChecked) => handleRoutesSync(checkboxChecked)}/>
         <RenameDialog entryId={selectedRoute.id} name={selectedRoute.name} isVisible={isRenameDialogVisible} onCancel={closeRenameDialog} onRename={renameRoute}/>
+        {syncInProgress && <ActivityIndicatorOverlay/> }
       </View>
   );
 }

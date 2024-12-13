@@ -35,7 +35,8 @@ function MenuButton(props: MenuButtonProps) {
               rippleColor="#007AFF"
               style={styles.button} 
               onPress={props.onPress} 
-              onLongPress={() => setIsMenuVisible(true)}>
+              onLongPress={() => setIsMenuVisible(true)}
+              disabled={props.disabled}>
               <Text style={styles.buttonText}>{props.text}</Text>
             </Button>
           }>

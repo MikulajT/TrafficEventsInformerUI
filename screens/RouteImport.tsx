@@ -7,7 +7,7 @@ import RouteRequests from "../api/RouteRequests";
 import RouteEventsRequest from "../api/RouteEventsRequests";
 import ActivityIndicatorOverlay from "../components/ActivityIndicatorOverlay";
 
-function RouteImport({ navigation } : any) {
+function RouteImport({ route, navigation } : any) {
   const [routeName, setRouteName] = useState<string>("");
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -32,7 +32,8 @@ function RouteImport({ navigation } : any) {
           if (response.success) {
             ToastAndroid.show("Trasa byla úspěšně importována", ToastAndroid.SHORT);
             if (response.data) {
-              syncRouteEvents();
+              //syncRouteEvents();
+              route.params.syncAllRouteEvents();
             }
             navigation.navigate("Routes", { refreshRoutes: true });
           } else {
@@ -51,16 +52,6 @@ function RouteImport({ navigation } : any) {
       setIsFormValid(false);
     }
   };
-
-  async function syncRouteEvents() {
-    ToastAndroid.show("Začala synchronizace dopravních událostí importované trasy", ToastAndroid.LONG);
-    const response = await routeEventsRequests.syncAllRouteEvents();
-    if (response.success) {
-      ToastAndroid.show("Synchronizace dopravních událostí importované trasy byla dokončena", ToastAndroid.LONG);
-    } else {
-      ToastAndroid.show("Nastala chyba během synchronizace dopravních událostí", ToastAndroid.LONG);
-    }
-  }
 
   return (
     <View style={[GlobalStyles.viewContainer, {flex: 1}]}>

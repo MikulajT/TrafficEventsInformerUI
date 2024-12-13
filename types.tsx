@@ -55,6 +55,7 @@ export type MenuButtonProps = {
   id: number | string;
   text: string;
   menuItems: MenuBottonItem[];
+  disabled?: boolean;
   onPress(): void;
 };
 
