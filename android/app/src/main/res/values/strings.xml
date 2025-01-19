@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TrafficIncidentInformer</string>
+    <string name="app_name">Traffic Events Informer</string>
     <string name="facebook_app_id">1717551662400792</string>
     <string name="facebook_client_token">2f1f6fd5fe2b3eab8564b3f0d6e637cc</string>
 </resources>
