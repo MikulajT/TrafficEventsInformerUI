@@ -9,6 +9,7 @@ import { format } from "date-fns";
 function TrafficEventEntry(props: TrafficEventEntryProps) {
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const colorScheme = Appearance.getColorScheme();
+  const progressBarColor = props.daysRemaining > 0 ? "#228B22" : "#FF2400"; // green - #228B22, red - #FF2400
 
   function getProgressBarWidth(totalDays: number, daysRemaining: number) {
     const progressBarWidth = Math.ceil((100 - (daysRemaining / totalDays) * 100));
@@ -42,7 +43,7 @@ function TrafficEventEntry(props: TrafficEventEntryProps) {
                     <Text style={[styles.buttonText, {fontSize: 12}]}>{format(props.endDate, "dd.MM.yyyy HH:mm:ss")}</Text>
                   </View>
                   <View style={styles.progressBarContainer}>
-                    <View style={[styles.progressBar, { width: `${getProgressBarWidth(props.totalDays, props.daysRemaining)}%` }]}>
+                    <View style={[styles.progressBar, {backgroundColor: progressBarColor, width: `${getProgressBarWidth(props.totalDays, props.daysRemaining)}%` }]}>
                     </View>
                     <View style={styles.textWrapper}>
                       <Text style={styles.progressText}>
@@ -97,8 +98,7 @@ const styles = StyleSheet.create({
   progressBar: {
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: "green"
+    alignItems: 'center'
   },
   textWrapper: {
     position: 'absolute',
