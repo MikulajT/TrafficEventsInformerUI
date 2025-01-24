@@ -1,4 +1,5 @@
 import { StyleProp, ViewStyle } from "react-native";
+import { Timespan } from "react-native/Libraries/Utilities/IPerformanceLogger";
 
 export type RootStackParamList = {
   HomeTab: undefined;
@@ -98,8 +99,8 @@ export type TrafficEventEntryProps = {
   eventName: string;
   startDate: Date;
   endDate: Date;
-  totalDays: number;
-  daysRemaining: number;
+  // totalDays: number;
+  // remainingTime: Timespan;
   onPress(): void;
   onRenamePress(trafficEventId: string): void;
 }

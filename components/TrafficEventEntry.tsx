@@ -3,15 +3,40 @@ import { TrafficEventEntryProps } from "../Types";
 import { Menu, Text } from "react-native-paper";
 import { Appearance, StyleSheet, TouchableNativeFeedback, View } from "react-native";
 import { darkTheme, lightTheme } from "../assets/Themes";
-import { format } from "date-fns";
+import { format, differenceInMilliseconds, differenceInDays } from "date-fns";
 
 // TODO: Refactor styles
 function TrafficEventEntry(props: TrafficEventEntryProps) {
+  // Convert to date object
+  const startDate = new Date(props.startDate);
+  const endDate = new Date(props.endDate);
+
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const colorScheme = Appearance.getColorScheme();
-  const progressBarColor = props.daysRemaining > 0 ? "#228B22" : "#FF2400"; // green - #228B22, red - #FF2400
+  const progressBarColor = (endDate.getTime() - new Date().getTime()) / 1000 < 0 ? "#228B22" : "#FF2400"; // green - #228B22, red - #FF2400
 
-  function getProgressBarWidth(totalDays: number, daysRemaining: number) {
+  function getRemainingTime(endTime: Date): string {
+    const now = new Date();
+    const differenceInMs = differenceInMilliseconds(endTime, now);
+    const differenceInDaysValue = differenceInDays(endTime, now);
+  
+    if (differenceInDaysValue < 1) {
+      if (differenceInMs < 0) {
+        return '00:00:00';
+      }
+      const hours = Math.floor(differenceInMs / (1000 * 60 * 60));
+      const minutes = Math.floor((differenceInMs % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((differenceInMs % (1000 * 60)) / 1000);
+  
+      return format(new Date(0, 0, 0, hours, minutes, seconds), 'HH:mm:ss');
+    } else {
+      return `${differenceInDaysValue} dnů`;
+    }
+  }
+
+  function getProgressBarWidth(startDate: Date, endDate: Date/*totalDays: number, daysRemaining: number*/) {
+    const totalDays = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+    const daysRemaining = getRemainingDays(endDate);
     const progressBarWidth = Math.ceil((100 - (daysRemaining / totalDays) * 100));
 
     if (progressBarWidth < 0) {
@@ -19,6 +44,12 @@ function TrafficEventEntry(props: TrafficEventEntryProps) {
     } else {
       return progressBarWidth;
     }
+  }
+
+  function getRemainingDays(endDate: Date) {
+    const now = new Date();
+    const daysRemaining = differenceInDays(endDate, now);
+    return daysRemaining < 0 ? 0 : daysRemaining;
   }
 
   return (
@@ -38,16 +69,16 @@ function TrafficEventEntry(props: TrafficEventEntryProps) {
                 <View style={[styles.button, {padding: 5, rowGap: 5, backgroundColor: colorScheme === "dark" ? darkTheme.colors.primary : lightTheme.colors.primary}]}>
                   <Text style={styles.buttonText}>{props.eventName}</Text>
                   <View style={{flexDirection: "row", justifyContent: "center" }}>
-                    <Text style={[styles.buttonText, {fontSize: 12}]}>{format(props.startDate, "dd.MM.yyyy HH:mm:ss")}</Text>
+                    <Text style={[styles.buttonText, {fontSize: 12}]}>{format(startDate, "dd.MM.yyyy HH:mm:ss")}</Text>
                     <Text style={[styles.buttonText, {fontSize: 12}]}> – </Text>
-                    <Text style={[styles.buttonText, {fontSize: 12}]}>{format(props.endDate, "dd.MM.yyyy HH:mm:ss")}</Text>
+                    <Text style={[styles.buttonText, {fontSize: 12}]}>{format(endDate, "dd.MM.yyyy HH:mm:ss")}</Text>
                   </View>
                   <View style={styles.progressBarContainer}>
-                    <View style={[styles.progressBar, {backgroundColor: progressBarColor, width: `${getProgressBarWidth(props.totalDays, props.daysRemaining)}%` }]}>
+                    <View style={[styles.progressBar, {backgroundColor: progressBarColor, width: `${getProgressBarWidth(startDate, endDate)}%` }]}>
                     </View>
                     <View style={styles.textWrapper}>
                       <Text style={styles.progressText}>
-                      {props.daysRemaining} dnů
+                      {getRemainingTime(endDate)}
                       </Text>
                     </View>
                   </View>
