@@ -14,9 +14,7 @@ function Incidents({ route, navigation } : any) {
     id:"", 
     name:"", 
     startDate: new Date(), 
-    endDate: new Date(), 
-    totalDays: 0, 
-    daysRemaining: 0
+    endDate: new Date()
   });
   const routeEventsRequests = new RouteEventsRequest();
 
@@ -35,8 +33,6 @@ function Incidents({ route, navigation } : any) {
           eventName={routeEvents[i].name}
           startDate={routeEvents[i].startDate}
           endDate={routeEvents[i].endDate}
-          totalDays={routeEvents[i].totalDays}
-          daysRemaining={routeEvents[i].daysRemaining}
           onPress={() => navigation.navigate("IncidentDetail", { routeId: route.params.routeId, eventId: routeEvents[i].id })}
           onRenamePress={showRenameDialog}/>
       );

@@ -34,8 +34,6 @@ export type RouteEvent = {
   name: string;
   startDate: Date;
   endDate: Date;
-  totalDays: number;
-  daysRemaining: number;
 };
 
 export type RouteEventDetail = {
