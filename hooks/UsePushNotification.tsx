@@ -83,10 +83,13 @@ function usePushNotification(navigation : any) {
   };
 
   const onNotificationOpenedAppFromQuit = async () => {
-    const message = await messaging().getInitialNotification();
+    const remoteMessage = await messaging().getInitialNotification();
 
-    if(message) {
-      console.log('App opened from QUIT by tapping notification:', JSON.stringify(message));
+    if (remoteMessage) {
+      console.log('App opened from QUIT by tapping notification:', JSON.stringify(remoteMessage));
+      if (remoteMessage.data && remoteMessage.data.eventId && remoteMessage.data.routeId) {
+        navigation.navigate("IncidentDetail", { routeId: remoteMessage.data.routeId, eventId: remoteMessage.data.eventId });
+      }
     }
   };
 
