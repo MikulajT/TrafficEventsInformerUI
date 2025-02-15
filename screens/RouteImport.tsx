@@ -4,7 +4,6 @@ import FilePicker from "../components/FilePicker";
 import { useState } from "react";
 import RouteName from "../components/RouteName";
 import RouteRequests from "../api/RouteRequests";
-import RouteEventsRequest from "../api/RouteEventsRequests";
 import ActivityIndicatorOverlay from "../components/ActivityIndicatorOverlay";
 
 function RouteImport({ route, navigation } : any) {
@@ -12,7 +11,6 @@ function RouteImport({ route, navigation } : any) {
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const routeRequests = new RouteRequests();
-  const routeEventsRequests = new RouteEventsRequest();
 
   async function uploadDocument(selectedFile: any) {
     if (routeName.trim() !== "") {

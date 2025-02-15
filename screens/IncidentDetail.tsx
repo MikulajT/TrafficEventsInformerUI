@@ -7,6 +7,7 @@ import { RouteEventDetail } from "../Types";
 import RouteEventsRequest from "../api/RouteEventsRequests";
 import { Text } from "react-native-paper";
 import { format } from "date-fns";
+import ActivityIndicatorOverlay from "../components/ActivityIndicatorOverlay";
 
 function IncidentDetail({ route, navigation } : any) {
   const [routeEventDetail, setRouteEventDetail] = useState<RouteEventDetail>({
@@ -23,6 +24,7 @@ function IncidentDetail({ route, navigation } : any) {
     endPointY: 0
   });
   const routeEventsRequests = new RouteEventsRequest();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     fetchRouteEventDetail(route.params.routeId, route.params.eventId);
@@ -43,7 +45,10 @@ function IncidentDetail({ route, navigation } : any) {
   }
 
   async function fetchRouteEventDetail(routeId: number, eventId: string) {
+    setIsLoading(true);
     const response = await routeEventsRequests.getRouteEventDetail(routeId, eventId);
+    setIsLoading(false);
+
     if (response.success && response.data) {
         setRouteEventDetail({...response.data, 
           startDate: new Date(response.data.startDate), 
@@ -71,6 +76,7 @@ function IncidentDetail({ route, navigation } : any) {
         <Text style={{fontSize: 16, marginBottom: 16}}>{routeEventDetail.daysRemaining}</Text>
         <IconButton style={{marginBottom: 16}} icon="map" text="Zobrazit na mapě" onPress={ShowIncidentOnMap}></IconButton>
       </ScrollView>
+      {isLoading && <ActivityIndicatorOverlay/>}
     </View>
   );
 }
