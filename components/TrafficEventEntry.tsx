@@ -13,7 +13,7 @@ function TrafficEventEntry(props: TrafficEventEntryProps) {
 
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const colorScheme = Appearance.getColorScheme();
-  const progressBarColor = (endDate.getTime() - new Date().getTime()) / 1000 < 0 ? "#228B22" : "#FF2400"; // green - #228B22, red - #FF2400
+  const progressBarColor = (endDate.getTime() - new Date().getTime()) / 1000 < 0 ? "#00A36C" : "#A9A9A9"; // Jade - #00A36C, Dark Gray - #A9A9A9"
 
   function getRemainingTime(endTime: Date): string {
     const now = new Date();
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     position: 'relative',
     justifyContent: 'center',
-    backgroundColor: "grey",
+    backgroundColor: "white",
     height: 15
   },
   progressBar: {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   progressText: {
-    color: "white"
+    color: "black"
   }
 });
 
