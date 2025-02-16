@@ -73,7 +73,7 @@ function TrafficEventEntry(props: TrafficEventEntryProps) {
                     <Text style={[styles.buttonText, {fontSize: 12}]}> – </Text>
                     <Text style={[styles.buttonText, {fontSize: 12}]}>{format(endDate, "dd.MM.yyyy HH:mm:ss")}</Text>
                   </View>
-                  <View style={styles.progressBarContainer}>
+                  <View style={[styles.progressBarContainer, {backgroundColor: colorScheme === "dark" ? "#242424" : "white"}]}>
                     <View style={[styles.progressBar, {backgroundColor: progressBarColor, width: `${getProgressBarWidth(startDate, endDate)}%` }]}>
                     </View>
                     <View style={styles.textWrapper}>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     position: 'relative',
     justifyContent: 'center',
-    backgroundColor: "white",
+    //backgroundColor: "#242424",
     height: 15
   },
   progressBar: {
