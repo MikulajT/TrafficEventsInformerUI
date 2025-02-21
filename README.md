@@ -1,79 +1,35 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Traffic Events Informer
 
-# Getting Started
+Traffic Events Informer (TEI) is a mobile application which notifies you about new traffic events on road, such as traffic accidents, road maintenance etc. It also notifies you when traffic events end. Traffic data are fetched from [Directorate of Roads and Highways of the Czech Republic API](https://mobilitydata.rsd.cz/), therefore TEI is only usable for roads in Czech Republic. The application is suitable for anyone who wants to know what is happening on the roads they regularly drive through. If the driver is notified about a new traffic event, he can choose an alternative route, or he can drive more carefully in the section where the traffic event is taking place.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## How to use
 
-## Step 1: Start the Metro Server
+In order for the application to be usable, it is necessary to import a file with route coordinates first. You can get this file from [mapy.cz](https://mapy.cz/) web page or from their [mobile application](https://play.google.com/store/apps/details?id=cz.seznam.mapy) (screenshots below were taken from mobile application). To get the application up and running, follow these steps:
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+1. Enter your route to mapy.cz
 
-To start Metro, run the following command from the _root_ of your React Native project:
+![Route from mapy.cz mobile application](screenshots//1.jpg)
 
-```bash
-# using npm
-npm start
+2. Export the route. Make sure the checkbox is checked or else the route won't be imported successfully.
 
-# OR using Yarn
-yarn start
-```
+![Route export dialog windows from mapy.cz mobile application](screenshots//2.jpg)
 
-## Step 2: Start your Application
+3. Sign in to TEI via your Google or Facebook account
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+![TEI sign in screen](screenshots//3.jpg)
 
-### For Android
+4. Tap add route button
 
-```bash
-# using npm
-npm run android
+![TEI traffic route add button](screenshots//4.jpg)
 
-# OR using Yarn
-yarn android
-```
+5. Select the route and import it
 
-### For iOS
+![TEI route import screen](screenshots//5.jpg)
 
-```bash
-# using npm
-npm run ios
+6. Browse traffic events in imported route.
 
-# OR using Yarn
-yarn ios
-```
+![TEI screen with list of traffic events in imported route](screenshots//6.jpg)
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+7. Tap on traffic event to see detailed info.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+![TEI screen with traffic event detail](screenshots//7.jpg)
