@@ -6,7 +6,7 @@ Traffic Events Informer (TEI) is a mobile application which notifies you about n
 
 In order for the application to be usable, it is necessary to import a file with route coordinates first. You can get this file from [mapy.cz](https://mapy.cz/) web page or from their [mobile application](https://play.google.com/store/apps/details?id=cz.seznam.mapy) (screenshots below were taken from mobile application). To get the application up and running, follow these steps:
 
-1. Enter your route to mapy.cz
+1. Enter your route in mapy.cz mobile application or web page
 
 ![Route from mapy.cz mobile application](screenshots//1.jpg)
 
