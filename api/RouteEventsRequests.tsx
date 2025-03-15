@@ -81,6 +81,30 @@ class RouteEventsRequest {
     return apiResponse;
   }
 
+  async syncRouteEvents(routeId: number): Promise<ApiResponse<undefined>> {
+    let apiResponse: ApiResponse<undefined> = {success: false};
+    try {
+      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events/sync`, {
+        method: "POST"
+      });
+      if (response.ok) {
+        apiResponse.success = true;
+      } else {
+        console.error("The request wasn't successful.", {
+          status: response.status,
+          statusText: response.statusText,
+          url: response.url,
+        });
+      }
+    } catch (error) {
+      console.error("An error occurred while fetching route events.", {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+    }
+    return apiResponse;
+  }
+
   async renameRouteEvent(routeId: number, eventId: string, eventName: string): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = {success: false};
     try {

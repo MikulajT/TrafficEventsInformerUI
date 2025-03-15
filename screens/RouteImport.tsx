@@ -28,10 +28,10 @@ function RouteImport({ route, navigation } : any) {
           const response = await routeRequests.addRoute(formData);
   
           if (response.success) {
+            const routeId = response.data;
             ToastAndroid.show("Trasa byla úspěšně importována", ToastAndroid.SHORT);
-            if (response.data) {
-              //syncRouteEvents();
-              route.params.syncAllRouteEvents();
+            if (routeId) {
+              route.params.syncRouteEvents(routeId);
             }
             navigation.navigate("Routes", { refreshRoutes: true });
           } else {

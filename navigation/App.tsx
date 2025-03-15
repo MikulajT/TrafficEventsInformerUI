@@ -15,17 +15,17 @@ function App() {
   let colorScheme = useColorScheme();
   const { type, isConnected } = useNetInfo();
 
-  BackgroundFetch.configure({
-    minimumFetchInterval: 28800, // Minimum interval in seconds (8 hours)
-    stopOnTerminate: false,
-    startOnBoot: true,
-  }, async (taskId) => {
-    new RouteEventsRequest().syncAllRouteEvents();
-    console.log("Sync all route events.");
-    BackgroundFetch.finish(taskId);
-  }, async (taskId) => {  
-    BackgroundFetch.finish(taskId);
-  });
+  // BackgroundFetch.configure({
+  //   minimumFetchInterval: 28800, // Minimum interval in seconds (8 hours)
+  //   stopOnTerminate: false,
+  //   startOnBoot: true,
+  // }, async (taskId) => {
+  //   new RouteEventsRequest().syncAllRouteEvents();
+  //   console.log("Sync all route events.");
+  //   BackgroundFetch.finish(taskId);
+  // }, async (taskId) => {  
+  //   BackgroundFetch.finish(taskId);
+  // });
 
   function renderComponent() {
     if (isConnected) {
