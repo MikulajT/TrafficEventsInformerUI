@@ -14,7 +14,7 @@ function SignIn({ navigation } : any) {
     GoogleSignin.configure({
       scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
       webClientId: "995041589777-0idch4g4e5g2d436l0fj5fo6j698e5mv.apps.googleusercontent.com", // From Firebase Console
-      offlineAccess: true,
+      offlineAccess: false,
     });
   }, []);
 
@@ -28,7 +28,8 @@ function SignIn({ navigation } : any) {
         firstName: userInfo.user.givenName ?? '',
         lastName: userInfo.user.familyName ?? '',
         email: userInfo.user.email ?? "",
-        provider: "google"
+        provider: "google",
+        idToken: userInfo.idToken ?? ""
       }));
       console.log('User Info:', userInfo);
     } catch (error: any) {
@@ -84,7 +85,8 @@ function SignIn({ navigation } : any) {
       firstName: fbFirstName,
       lastName: fbLastName,
       email: userInfo.user.email ?? "",
-      provider: "facebook"
+      provider: "facebook",
+      idToken: ""
     }));
   }
 

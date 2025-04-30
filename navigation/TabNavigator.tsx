@@ -5,8 +5,8 @@ import TrafficRoutesNavigator from "./TrafficRoutesNavigator";
 import AppInfo from "../screens/AppInfo";
 import UserAccountNavigator from "./UserAccountNavigator";
 import { useEffect } from "react";
-import RouteEventsRequest from '../api/RouteEventsRequests';
-import RouteRequests from "../api/RouteRequests";
+import RouteEventsRequest from '../api/requests/RouteEventsRequests';
+import RouteRequests from "../api/requests/RouteRequests";
 
 function TabNavigator() {
   const Tab = createBottomTabNavigator();
@@ -19,6 +19,8 @@ function TabNavigator() {
 
       if (userHasRoutes) {
         console.log("Tab navigator mounted, user signed in and has routes -> sync all route events");
+
+        // TODO: Fix 401 error
         const response = await routeEventsRequests.syncAllRouteEvents();
         if (response.success) {
           console.log("All routes events synced");

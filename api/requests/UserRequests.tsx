@@ -1,25 +1,27 @@
 import { useSelector } from "react-redux";
-import { ApiResponse } from "../Types";
+import { ApiResponse } from "../../Types";
 import Config from "react-native-config";
 
 class UserRequests {
   private userId: string;
   private email: string;
+  private idToken: string;
 
   constructor() {
-    const { userId, email, provider } = useSelector((state: any) => state.auth);
+    const { userId, email, provider, idToken } = useSelector((state: any) => state.auth);
     this.userId = provider != null && provider.length > 0 ? `${provider[0].toLowerCase()}_${userId}`: "";
     this.email = email;
+    this.idToken = idToken;
   }
 
   async addFcmDeviceToken(fcmDeviceToken: string): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = { success: false };
     try {
-      console.log(`token: ${fcmDeviceToken}`);
       const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/fcm-tokens`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.idToken}`
         },
         body: JSON.stringify(fcmDeviceToken), // Wrap the token in a JSON object
       });
@@ -41,15 +43,13 @@ class UserRequests {
 
   async addUser(): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = { success: false };
-    
-    console.log(`this.userId:${this.userId}`);
-    console.log(`this.email:${this.email}`);
 
     try {
       const response = await fetch(`${Config.TEI_API_KEY}/users`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.idToken}`
         },
         body: JSON.stringify({Id: this.userId, Email: this.email})
       });

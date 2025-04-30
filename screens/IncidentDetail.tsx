@@ -4,7 +4,7 @@ import GlobalStyles from "../assets/GlobalStyles";
 import IconButton from "../components/IconButton";
 import { useEffect, useState } from "react";
 import { RouteEventDetail } from "../Types";
-import RouteEventsRequest from "../api/RouteEventsRequests";
+import RouteEventsRequest from "../api/requests/RouteEventsRequests";
 import { Text } from "react-native-paper";
 import { format } from "date-fns";
 import ActivityIndicatorOverlay from "../components/ActivityIndicatorOverlay";

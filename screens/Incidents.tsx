@@ -2,7 +2,7 @@ import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, ToastAndroid
 import GlobalStyles from "../assets/GlobalStyles";
 import { useEffect, useState } from "react";
 import { RouteEvent } from "../Types";
-import RouteEventsRequest from "../api/RouteEventsRequests";
+import RouteEventsRequest from "../api/requests/RouteEventsRequests";
 import RenameDialog from "../components/RenameDialog";
 import TrafficEventEntry from "../components/TrafficEventEntry";
 

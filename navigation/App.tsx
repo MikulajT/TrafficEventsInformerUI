@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PaperProvider } from 'react-native-paper';
 import BackgroundFetch from 'react-native-background-fetch';
-import RouteEventsRequest from '../api/RouteEventsRequests';
+import RouteEventsRequest from '../api/requests/RouteEventsRequests';
 import { useColorScheme } from 'react-native';
 import { darkTheme, lightTheme } from '../assets/Themes';
 import { useNetInfo } from '@react-native-community/netinfo';
@@ -15,17 +15,17 @@ function App() {
   let colorScheme = useColorScheme();
   const { type, isConnected } = useNetInfo();
 
-  BackgroundFetch.configure({
-    minimumFetchInterval: 28800, // Minimum interval in seconds (8 hours)
-    stopOnTerminate: false,
-    startOnBoot: true,
-  }, async (taskId) => {
-    new RouteEventsRequest().syncAllRouteEvents();
-    console.log("Sync all route events.");
-    BackgroundFetch.finish(taskId);
-  }, async (taskId) => {  
-    BackgroundFetch.finish(taskId);
-  });
+  // BackgroundFetch.configure({
+  //   minimumFetchInterval: 28800, // Minimum interval in seconds (8 hours)
+  //   stopOnTerminate: false,
+  //   startOnBoot: true,
+  // }, async (taskId) => {
+  //   new RouteEventsRequest().syncAllRouteEvents();
+  //   console.log("Sync all route events.");
+  //   BackgroundFetch.finish(taskId);
+  // }, async (taskId) => {  
+  //   BackgroundFetch.finish(taskId);
+  // });
 
   function renderComponent() {
     if (isConnected) {

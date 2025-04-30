@@ -4,11 +4,11 @@ import GlobalStyles from "../assets/GlobalStyles";
 import { useEffect, useState } from "react";
 import { TrafficRoute } from "../Types";
 import MenuButton from "../components/MenuButton";
-import RouteRequests from "../api/RouteRequests";
+import RouteRequests from "../api/requests/RouteRequests";
 import { useIsFocused } from '@react-navigation/native';
 import ConfirmDialog from "../components/ConfirmDialog";
 import RenameDialog from "../components/RenameDialog";
-import RouteEventsRequest from "../api/RouteEventsRequests";
+import RouteEventsRequest from "../api/requests/RouteEventsRequests";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ActivityIndicatorOverlay from "../components/ActivityIndicatorOverlay";
 

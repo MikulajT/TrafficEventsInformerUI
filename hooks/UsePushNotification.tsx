@@ -1,6 +1,6 @@
 import messaging from '@react-native-firebase/messaging';
 import {PermissionsAndroid, Platform} from 'react-native';
-import UserRequests from '../api/UserRequests';
+import UserRequests from '../api/requests/UserRequests';
 
 function usePushNotification(navigation : any) {
   const userRequests = new UserRequests();
