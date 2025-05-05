@@ -1,22 +1,28 @@
-import { useSelector } from "react-redux";
 import { ApiResponse, RouteEvent, RouteEventDetail } from "../../Types";
 import Config from "react-native-config";
+import { store } from '../../redux/Store';
+import { requestWithAuth } from "../auth/requestWithAuth";
 
 class RouteEventsRequest {
-  private userId: string;
-  private idToken: string;
 
   constructor() {
-    const { userId, provider, idToken } = useSelector((state: any) => state.auth);
-    
-    this.userId = provider != null && provider.length > 0 ? `${provider[0].toLowerCase()}_${userId}`: "";
-    this.idToken = idToken;
+
   }
 
+  private get authState() {
+    return store.getState().auth;
+  }
+  
+  private get userId(): string {
+    const { userId, provider } = this.authState;
+    return provider && provider.length > 0 ? `${provider[0].toLowerCase()}_${userId}` : '';
+  }
+  
   async getRouteEvents(routeId: number): Promise<ApiResponse<RouteEvent[]>> {
     let apiResponse: ApiResponse<RouteEvent[]> = {success: false};
     try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events`);
+      const response = await requestWithAuth(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events`);
+      
       if (response.ok) {
         apiResponse.success = true;
         apiResponse.data = await response.json();
@@ -39,7 +45,8 @@ class RouteEventsRequest {
   async getRouteEventDetail(routeId: number, eventId: string): Promise<ApiResponse<RouteEventDetail>> {
     let apiResponse: ApiResponse<RouteEventDetail> = {success: false};
     try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events/${eventId}`);
+      const response = await requestWithAuth(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events/${eventId}`);
+      
       if (response.ok) {
         apiResponse.success = true;
         apiResponse.data = await response.json();
@@ -62,9 +69,10 @@ class RouteEventsRequest {
   async syncAllRouteEvents(): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = {success: false};
     try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/events/sync`, {
-        method: "POST"
+      const response = await requestWithAuth(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/events/sync`, {
+        method: "POST",
       });
+
       if (response.ok) {
         apiResponse.success = true;
       } else {
@@ -86,13 +94,14 @@ class RouteEventsRequest {
   async renameRouteEvent(routeId: number, eventId: string, eventName: string): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = {success: false};
     try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events/${eventId}`, {
+      const response = await requestWithAuth(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}/events/${eventId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(eventName),
       });
+      
       if (response.ok) {
         apiResponse.success = true;
       } else {

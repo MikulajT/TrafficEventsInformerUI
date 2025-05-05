@@ -1,12 +1,22 @@
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { store } from '../../redux/Store';
 
-// Not used
 class AuthManager {
   private static instance: AuthManager;
   private idToken: string | null = null;
-  private refreshInProgress: Promise<void> | null = null;
+  private refreshingPromise: Promise<void> | null = null;
 
-  private constructor() {}
+  private constructor() {
+    const state = store.getState().auth;
+    this.idToken = state.idToken || null;
+
+    store.subscribe(() => {
+      const newToken = store.getState().auth.idToken;
+      if (this.idToken !== newToken) {
+        this.idToken = newToken || null;
+      }
+    });
+  }
 
   public static getInstance(): AuthManager {
     if (!AuthManager.instance) {
@@ -27,25 +37,32 @@ class AuthManager {
   }
 
   public async refreshToken(): Promise<void> {
-    // Prevent overlapping refreshes
-    if (this.refreshInProgress) {
-      await this.refreshInProgress;
-      return;
+    if (this.refreshingPromise) {
+      // A refresh is already in progress. Wait for it.
+      return this.refreshingPromise;
     }
 
-    this.refreshInProgress = (async () => {
+    // Create a shared promise for all waiting requests
+    this.refreshingPromise = (async () => {
       try {
+        GoogleSignin.configure({
+          scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
+          webClientId: "995041589777-0idch4g4e5g2d436l0fj5fo6j698e5mv.apps.googleusercontent.com",
+          offlineAccess: false,
+        });
+
         const userInfo = await GoogleSignin.signInSilently();
         this.idToken = userInfo.idToken!;
       } catch (err) {
         console.error("Token refresh failed", err);
         throw new Error("Failed to refresh token");
       } finally {
-        this.refreshInProgress = null;
+        // Clear the shared promise so next refresh can happen if needed
+        this.refreshingPromise = null;
       }
     })();
 
-    await this.refreshInProgress;
+    return this.refreshingPromise;
   }
 }
 

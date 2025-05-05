@@ -1,29 +1,36 @@
-import { useSelector } from "react-redux";
 import { ApiResponse } from "../../Types";
 import Config from "react-native-config";
+import { store } from '../../redux/Store';
+import { requestWithAuth } from "../auth/requestWithAuth";
 
 class UserRequests {
-  private userId: string;
-  private email: string;
-  private idToken: string;
 
   constructor() {
-    const { userId, email, provider, idToken } = useSelector((state: any) => state.auth);
-    this.userId = provider != null && provider.length > 0 ? `${provider[0].toLowerCase()}_${userId}`: "";
-    this.email = email;
-    this.idToken = idToken;
+
+  }
+
+  private get authState() {
+    return store.getState().auth;
+  }
+  
+  private get userId(): string {
+    const { userId, provider } = this.authState;
+    return provider && provider.length > 0 ? `${provider[0].toLowerCase()}_${userId}` : '';
+  }
+  
+  private get email(): string | null {
+    return this.authState.email;
   }
 
   async addFcmDeviceToken(fcmDeviceToken: string): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = { success: false };
     try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/fcm-tokens`, {
+      const response = await requestWithAuth(`${Config.TEI_API_KEY}/users/${this.userId}/fcm-tokens`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${this.idToken}`
         },
-        body: JSON.stringify(fcmDeviceToken), // Wrap the token in a JSON object
+        body: JSON.stringify(fcmDeviceToken),
       });
 
       console.log(`addFcmDeviceToken response status code: ${response.status}`);
@@ -45,13 +52,12 @@ class UserRequests {
     let apiResponse: ApiResponse<undefined> = { success: false };
 
     try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users`, {
+      const response = await requestWithAuth(`${Config.TEI_API_KEY}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${this.idToken}`
         },
-        body: JSON.stringify({Id: this.userId, Email: this.email})
+        body: JSON.stringify({ Id: this.userId, Email: this.email }),
       });
 
       console.log(`addUser response status code: ${response.status}`);

@@ -1,6 +1,5 @@
 import AuthManager from './AuthManager';
 
-// Not used
 export async function requestWithAuth<T>(
   url: string,
   init: RequestInit = {},

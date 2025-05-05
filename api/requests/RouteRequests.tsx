@@ -1,27 +1,32 @@
-import { useSelector } from "react-redux";
 import { ApiResponse, TrafficRoute } from "../../Types";
 import Config from "react-native-config";
+import { store } from '../../redux/Store';
+import { requestWithAuth } from "../auth/requestWithAuth";
 
 class RouteRequests {
-  private userId: string;
-  private idToken: string;
 
   constructor() {
-    const { userId, provider, idToken } = useSelector((state: any) => state.auth);
-    
-    this.userId = provider != null && provider.length > 0 ? `${provider[0].toLowerCase()}_${userId}`: "";
-    this.idToken = idToken;
+
+  }
+
+  private get authState() {
+    return store.getState().auth;
+  }
+  
+  private get userId(): string {
+    const { userId, provider } = this.authState;
+    return provider && provider.length > 0 ? `${provider[0].toLowerCase()}_${userId}` : '';
   }
 
   async getUsersRoutes(): Promise<ApiResponse<TrafficRoute[]>> {
     let apiResponse: ApiResponse<TrafficRoute[]> = {success: false};
 
     try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes`, {
-        headers: {
-          Authorization: `Bearer ${this.idToken}`
-        }
-      });
+      const response = await requestWithAuth<TrafficRoute[]>(
+        `${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes`,
+        { method: 'GET' }
+      );
+      
       if (response.ok) {
         apiResponse.success = true;
         apiResponse.data = await response.json();
@@ -48,14 +53,17 @@ class RouteRequests {
     formData.append("UserId", this.userId);
 
     try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${this.idToken}`
-        },
-        body: formData,
-      });
+      const response = await requestWithAuth<number>(
+        `${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          body: formData,
+        }
+      );
+
       if (response.ok) {
         apiResponse.success = true;
         apiResponse.data = await response.json();
@@ -80,14 +88,17 @@ class RouteRequests {
   async renameRoute(routeId: number, routeName: string): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = {success: false};
     try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.idToken}`
-        },
-        body: JSON.stringify({routeName: routeName}),
-      });
+      const response = await requestWithAuth<undefined>(
+        `${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ routeName }),
+        }
+      );
+
       if (response.ok) {
         apiResponse.success = true;
       } else {
@@ -109,12 +120,13 @@ class RouteRequests {
   async deleteRoute(routeId: number): Promise<ApiResponse<undefined>> {
     let apiResponse: ApiResponse<undefined> = {success: false};
     try {
-      const response = await fetch(`${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${this.idToken}`
+      const response = await requestWithAuth<undefined>(
+        `${Config.TEI_API_KEY}/users/${this.userId}/trafficRoutes/${routeId}`,
+        {
+          method: 'DELETE',
         }
-      });
+      );
+
       if (response.ok) {
         apiResponse.success = true;
       } else {
