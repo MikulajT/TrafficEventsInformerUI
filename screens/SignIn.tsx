@@ -29,7 +29,7 @@ function SignIn({ navigation } : any) {
         lastName: userInfo.user.familyName ?? '',
         email: userInfo.user.email ?? "",
         provider: "google",
-        idToken: userInfo.idToken ?? ""
+        token: userInfo.idToken ?? ""
       }));
       console.log('User Info:', userInfo);
     } catch (error: any) {
@@ -78,15 +78,15 @@ function SignIn({ navigation } : any) {
       fbFirstName = splittedName[0];
       fbLastName = splittedName[1];
     }
-
+    
     dispatch(signIn({
-      userId: userInfo.user.uid,
+      userId: data.userID,
       profilePictureUrl: userInfo.user.photoURL ?? "",
       firstName: fbFirstName,
       lastName: fbLastName,
       email: userInfo.user.email ?? "",
       provider: "facebook",
-      idToken: ""
+      token: data.accessToken
     }));
   }
 

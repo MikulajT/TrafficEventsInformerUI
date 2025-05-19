@@ -7,7 +7,6 @@ export async function requestWithAuth<T>(
 ): Promise<Response> {
   try {
     const token = await AuthManager.getValidToken();
-
     const response = await fetch(url, {
       ...init,
       headers: {
@@ -16,10 +15,10 @@ export async function requestWithAuth<T>(
       },
     });
 
-    if (response.status === 401 && retry) {
+    if (response.status === 401 && retry && AuthManager.getAuthProvider() === "google") {
       console.warn("Token expired. Refreshing and retrying...");
-      AuthManager.invalidateToken();
-      await AuthManager.refreshToken();
+      //AuthManager.invalidateToken();
+      await AuthManager.refreshGoogleToken();
       return requestWithAuth<T>(url, init, false); // Retry once
     }
 

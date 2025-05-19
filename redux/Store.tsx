@@ -12,7 +12,7 @@ interface AuthState {
   lastName: string | null;
   email: string | null;
   provider: string | null;
-  idToken: string | null;
+  token: string | null;
 }
 
 const initialState: AuthState = {
@@ -23,7 +23,7 @@ const initialState: AuthState = {
   lastName: null,
   email: null,
   provider: null,
-  idToken: null
+  token: null
 };
 
 interface SignInPayload {
@@ -33,7 +33,7 @@ interface SignInPayload {
   lastName: string;
   email: string;
   provider: string;
-  idToken: string;
+  token: string;
 }
 
 // Create a slice for authentication
@@ -49,7 +49,7 @@ const authSlice = createSlice({
       state.lastName = action.payload.lastName;
       state.email = action.payload.email;
       state.provider = action.payload.provider;
-      state.idToken = action.payload.idToken;
+      state.token = action.payload.token;
     },
     signOut: (state) => {
       state.isSignedIn = false;
@@ -59,7 +59,7 @@ const authSlice = createSlice({
       state.lastName = null;
       state.email = null;
       state.provider = null;
-      state.idToken = null;
+      state.token = null;
     },
   },
 });

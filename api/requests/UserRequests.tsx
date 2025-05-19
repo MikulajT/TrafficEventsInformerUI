@@ -52,12 +52,12 @@ class UserRequests {
     let apiResponse: ApiResponse<undefined> = { success: false };
 
     try {
-      const response = await requestWithAuth(`${Config.TEI_API_KEY}/users`, {
+      const response = await requestWithAuth(`${Config.TEI_API_KEY}/users/${this.userId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Id: this.userId, Email: this.email }),
+        body: JSON.stringify({ Email: this.email }),
       });
 
       console.log(`addUser response status code: ${response.status}`);

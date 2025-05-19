@@ -36,7 +36,6 @@ class RouteRequests {
           statusText: response.statusText,
           url: response.url,
         });
-        
       }
     } catch (error) {
       console.error("An error occurred while fetching route events.", {

@@ -3,19 +3,19 @@ import { store } from '../../redux/Store';
 
 class AuthManager {
   private static instance: AuthManager;
-  private idToken: string | null = null;
+  //private token: string | null = null;
   private refreshingPromise: Promise<void> | null = null;
 
   private constructor() {
     const state = store.getState().auth;
-    this.idToken = state.idToken || null;
+    //this.token = state.token || null;
 
-    store.subscribe(() => {
-      const newToken = store.getState().auth.idToken;
-      if (this.idToken !== newToken) {
-        this.idToken = newToken || null;
-      }
-    });
+    // store.subscribe(() => {
+    //   const newToken = store.getState().auth.token;
+    //   if (this.token !== newToken) {
+    //     this.token = newToken || null;
+    //   }
+    // });
   }
 
   public static getInstance(): AuthManager {
@@ -25,18 +25,24 @@ class AuthManager {
     return AuthManager.instance;
   }
 
+  public getAuthProvider() : string | null {
+    const state = store.getState().auth
+    return state.provider || null;
+  }
+
   public async getValidToken(): Promise<string> {
-    if (!this.idToken) {
-      await this.refreshToken();
+    const token = store.getState().auth.token;
+    if (!token) {
+      throw new Error("No token in store");
     }
-    return this.idToken!;
+    return token;
   }
 
-  public invalidateToken(): void {
-    this.idToken = null;
-  }
+  // public invalidateToken(): void {
+  //   this.token = null;
+  // }
 
-  public async refreshToken(): Promise<void> {
+  public async refreshGoogleToken(): Promise<void> {
     if (this.refreshingPromise) {
       // A refresh is already in progress. Wait for it.
       return this.refreshingPromise;
@@ -52,7 +58,7 @@ class AuthManager {
         });
 
         const userInfo = await GoogleSignin.signInSilently();
-        this.idToken = userInfo.idToken!;
+        //this.token = userInfo.idToken!;
       } catch (err) {
         console.error("Token refresh failed", err);
         throw new Error("Failed to refresh token");
